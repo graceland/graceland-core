@@ -51,4 +51,15 @@ public class HostAwareGraphiteReporterFactoryTest {
         reporterFactory.setPrefix(prefix_solo);
         assertThat(reporterFactory.getPrefix(), is(expectedPrefix_solo));
     }
+
+    @Test
+    public void prefix_replaces_non_alphanumerics_with_underscores() throws UnknownHostException {
+        String hostName = "my.host.name-is_not a$number%123*2321";
+        String expectedHostName = "my_host_name_is_not_a_number_123_2321";
+
+        HostAwareGraphiteReporterFactory reporterFactory = buildReporter(hostName);
+
+        reporterFactory.setPrefix("%s");
+        assertThat(reporterFactory.getPrefix(), is(expectedHostName));
+    }
 }

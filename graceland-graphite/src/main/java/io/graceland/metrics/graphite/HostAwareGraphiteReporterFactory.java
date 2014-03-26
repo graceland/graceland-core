@@ -5,11 +5,14 @@ import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.google.common.base.CharMatcher;
 
 import io.dropwizard.metrics.graphite.GraphiteReporterFactory;
 
 public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(HostAwareGraphiteReporterFactory.class);
+    private static final CharMatcher NON_ALPHANUMERIC = CharMatcher.JAVA_LETTER_OR_DIGIT.negate();
+
     private final String hostName;
 
     public HostAwareGraphiteReporterFactory() {
@@ -18,6 +21,7 @@ public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
         try {
             InetAddress address = InetAddress.getLocalHost();
             possibleHostName = address.getHostName();
+            possibleHostName = NON_ALPHANUMERIC.replaceFrom(possibleHostName, "_");
             LOGGER.info("Using the following hostname for the graphite prefix: {}", possibleHostName);
 
         } catch (UnknownHostException e) {
