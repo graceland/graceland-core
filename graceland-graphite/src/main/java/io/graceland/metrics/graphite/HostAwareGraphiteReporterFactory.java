@@ -31,6 +31,17 @@ public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
         this.hostName = possibleHostName;
     }
 
+    @Override
+    public void setPrefix(String prefix) {
+        String regex = ".*\\%[^s].*";
+
+        if (prefix.matches(regex)) {
+            throw new IllegalArgumentException("The prefix can not contain a `%` without a trailing `s`.");
+        }
+
+        super.setPrefix(prefix);
+    }
+
     /**
      * Returns the prefix for the graphite reporter, formatting the prefix with the host name as input.
      * <p/>

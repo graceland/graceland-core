@@ -74,6 +74,13 @@ public class HostAwareGraphiteReporterFactoryTest {
         assertThat(reporterFactory.getPrefix(), is("before.after.last"));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void handles_poorly_formated_prefixes() throws UnknownHostException {
+        HostAwareGraphiteReporterFactory reporterFactory = buildReporter("hostName");
+
+        reporterFactory.setPrefix("before.%s.aft%er..last");
+    }
+
     @Test
     public void loaded_by_service_provider() {
         boolean found = false;
