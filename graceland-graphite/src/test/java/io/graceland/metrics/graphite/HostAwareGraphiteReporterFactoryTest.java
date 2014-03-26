@@ -2,12 +2,15 @@ package io.graceland.metrics.graphite;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ServiceLoader;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+
+import io.dropwizard.metrics.ReporterFactory;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -61,5 +64,17 @@ public class HostAwareGraphiteReporterFactoryTest {
 
         reporterFactory.setPrefix("%s");
         assertThat(reporterFactory.getPrefix(), is(expectedHostName));
+    }
+
+    @Test
+    public void loaded_by_service_provider() {
+        boolean found = false;
+        for (ReporterFactory reporterFactory : ServiceLoader.load(ReporterFactory.class)) {
+            if (reporterFactory instanceof HostAwareGraphiteReporterFactory) {
+                found = true;
+            }
+        }
+
+        assertThat(found, is(true));
     }
 }
