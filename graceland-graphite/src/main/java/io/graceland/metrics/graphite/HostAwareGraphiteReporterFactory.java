@@ -39,12 +39,18 @@ public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
      * Will give: <pre>cluster.localhost.mycomponent</pre>
      * <p/>
      * Where localhost is the host name.
+     * <p/>
+     * It will also replace double dots {@code ..} with a single dot {@code .}.
      *
      * @return The prefix, with the host name appended.
      */
     @Override
     public String getPrefix() {
         String pattern = super.getPrefix();
-        return String.format(pattern, hostName);
+
+        String prefix = String.format(pattern, hostName);
+        prefix = prefix.replace("..", ".");
+
+        return prefix;
     }
 }

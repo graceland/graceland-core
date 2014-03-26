@@ -67,6 +67,14 @@ public class HostAwareGraphiteReporterFactoryTest {
     }
 
     @Test
+    public void remove_double_dots() throws UnknownHostException {
+        HostAwareGraphiteReporterFactory reporterFactory = buildReporter("");
+
+        reporterFactory.setPrefix("before.%s.after..last");
+        assertThat(reporterFactory.getPrefix(), is("before.after.last"));
+    }
+
+    @Test
     public void loaded_by_service_provider() {
         boolean found = false;
         for (ReporterFactory reporterFactory : ServiceLoader.load(ReporterFactory.class)) {
