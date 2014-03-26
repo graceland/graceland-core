@@ -4,21 +4,34 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.PowerMockRunner;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
+@RunWith(PowerMockRunner.class)
+@PrepareForTest(HostAwareGraphiteReporterFactory.class)
 public class HostAwareGraphiteReporterFactoryTest {
 
-    private HostAwareGraphiteReporterFactory reporterFactory = new HostAwareGraphiteReporterFactory();
+    private HostAwareGraphiteReporterFactory buildReporter(String hostName) throws UnknownHostException {
+        InetAddress localHost = mock(InetAddress.class);
+        when(localHost.getHostName()).thenReturn(hostName);
 
-    private String expectedHostName() throws UnknownHostException {
-        return InetAddress.getLocalHost().getHostName();
+        PowerMockito.mockStatic(InetAddress.class);
+        when(InetAddress.getLocalHost()).thenReturn(localHost);
+
+        return new HostAwareGraphiteReporterFactory();
     }
 
     @Test
     public void prefix_replaces_host() throws UnknownHostException {
-        String hostName = expectedHostName();
+        String hostName = "myhostname";
+        HostAwareGraphiteReporterFactory reporterFactory = buildReporter(hostName);
 
         String prefix = "test.%s.this.out";
         String expectedPrefix = "test." + hostName + ".this.out";
