@@ -12,6 +12,8 @@ import io.dropwizard.metrics.graphite.GraphiteReporterFactory;
 public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(HostAwareGraphiteReporterFactory.class);
     private static final CharMatcher NON_ALPHANUMERIC = CharMatcher.JAVA_LETTER_OR_DIGIT.negate();
+    private static final String HOSTNAME_VARIABLE = "%s";
+    private static final String HOSTNAME_REGEX = ".*%[^s].*";
 
     private final String hostName;
 
@@ -33,7 +35,7 @@ public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
 
     @Override
     public void setPrefix(String prefix) {
-        String regex = ".*\\%[^s].*";
+        String regex = HOSTNAME_REGEX;
 
         if (prefix.matches(regex)) {
             throw new IllegalArgumentException("The prefix can not contain a `%` without a trailing `s`.");
@@ -59,7 +61,7 @@ public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
     public String getPrefix() {
         String pattern = super.getPrefix();
 
-        String prefix = String.format(pattern, hostName);
+        String prefix = pattern.replace(HOSTNAME_VARIABLE, hostName);
         prefix = prefix.replace("..", ".");
 
         return prefix;

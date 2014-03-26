@@ -82,6 +82,14 @@ public class HostAwareGraphiteReporterFactoryTest {
     }
 
     @Test
+    public void replaces_more_than_once() throws UnknownHostException {
+        HostAwareGraphiteReporterFactory reporterFactory = buildReporter("host");
+
+        reporterFactory.setPrefix("before.%s.after.%s.last");
+        assertThat(reporterFactory.getPrefix(), is("before.host.after.host.last"));
+    }
+
+    @Test
     public void loaded_by_service_provider() {
         boolean found = false;
         for (ReporterFactory reporterFactory : ServiceLoader.load(ReporterFactory.class)) {
