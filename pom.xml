@@ -12,6 +12,7 @@
 
     <modules>
         <module>graceland-platform</module>
+        <module>graceland-graphite</module>
     </modules>
 
     <properties>
