@@ -5,10 +5,12 @@ import java.net.UnknownHostException;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.CharMatcher;
 
 import io.dropwizard.metrics.graphite.GraphiteReporterFactory;
 
+@JsonTypeName("graphite-hostaware")
 public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(HostAwareGraphiteReporterFactory.class);
     private static final CharMatcher NON_ALPHANUMERIC = CharMatcher.JAVA_LETTER_OR_DIGIT.negate();
