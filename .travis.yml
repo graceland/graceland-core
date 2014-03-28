@@ -1,0 +1,11 @@
+# kudos to dropwizard/dropwizard for the sample config! :)
+
+language: java
+
+install: echo "I trust Maven."
+
+# don't just run the tests, also run Findbugs and friends
+script: mvn verify
+
+jdk:
+    - oraclejdk7
