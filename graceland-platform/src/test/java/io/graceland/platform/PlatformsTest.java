@@ -3,7 +3,7 @@ package io.graceland.platform;
 import org.junit.Test;
 import com.google.common.collect.ImmutableList;
 
-import io.graceland.applications.Application;
+import io.graceland.application.Application;
 import io.graceland.plugins.Plugin;
 
 import static org.mockito.Mockito.mock;

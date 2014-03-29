@@ -17,7 +17,7 @@ import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.graceland.applications.Application;
+import io.graceland.application.Application;
 import io.graceland.inject.Configurator;
 import io.graceland.inject.DropwizardModule;
 import io.graceland.inject.Initializer;

@@ -1,4 +1,4 @@
-package io.graceland.applications;
+package io.graceland.application;
 
 import java.util.List;
 

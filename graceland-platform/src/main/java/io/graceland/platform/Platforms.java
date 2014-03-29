@@ -2,7 +2,7 @@ package io.graceland.platform;
 
 import com.google.common.base.Preconditions;
 
-import io.graceland.applications.Application;
+import io.graceland.application.Application;
 
 /**
  * A utility class that builds a platform for a particular scenario.
