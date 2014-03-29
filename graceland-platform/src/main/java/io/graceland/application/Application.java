@@ -12,6 +12,8 @@ import io.graceland.plugin.Plugin;
  */
 public interface Application {
 
+    void loadPlugin(Plugin plugin);
+
     /**
      * Provides a list of loaded plugins for this application. Once requested, the list of plugins should not change.
      * <p/>

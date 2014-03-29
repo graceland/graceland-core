@@ -20,18 +20,13 @@ public class ModalApplicationTest extends ApplicationTest {
     private static final String[] ARGS_NOT_VALID = new String[]{"server", "config.yml", "--NOTFOUND"};
     private static final String[] ARGS_BAD_CASE = new String[]{"server", "config.yml", "--dev"};
 
-    private Plugin plugin0 = mock(Plugin.class);
     private Plugin plugin1 = mock(Plugin.class);
     private Plugin plugin2 = mock(Plugin.class);
     private Plugin plugin3 = mock(Plugin.class);
+    private Plugin plugin4 = mock(Plugin.class);
 
     @Override
     protected Application newApplication() {
-        return new TestModalApplication(ARGS_DEV);
-    }
-
-    @Override
-    protected Application newEmptyApplication() {
         return new ModalApplication<TestModes>(TestModes.class, TestModes.PROD, ARGS_MISSING) {
             @Override
             protected void configureFor(TestModes mode) {
@@ -46,7 +41,7 @@ public class ModalApplicationTest extends ApplicationTest {
 
         List<Plugin> plugins = application.getPlugins();
 
-        assertThat(plugins, contains(plugin0, plugin1, plugin2));
+        assertThat(plugins, contains(plugin1, plugin2, plugin3));
     }
 
     @Test
@@ -55,7 +50,7 @@ public class ModalApplicationTest extends ApplicationTest {
 
         List<Plugin> plugins = application.getPlugins();
 
-        assertThat(plugins, contains(plugin0, plugin2, plugin3));
+        assertThat(plugins, contains(plugin1, plugin3, plugin4));
     }
 
     @Test(expected = NullPointerException.class)
@@ -123,17 +118,17 @@ public class ModalApplicationTest extends ApplicationTest {
 
         @Override
         protected void configureFor(TestModes mode) {
-            loadPlugin(plugin0);
+            loadPlugin(plugin1);
 
             switch (mode) {
                 case DEV:
-                    loadPlugin(plugin2);
                     loadPlugin(plugin3);
+                    loadPlugin(plugin4);
                     break;
 
                 case PROD:
-                    loadPlugin(plugin1);
                     loadPlugin(plugin2);
+                    loadPlugin(plugin3);
                     break;
             }
         }
