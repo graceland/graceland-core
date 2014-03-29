@@ -2,7 +2,7 @@ package io.graceland.application;
 
 import com.google.common.collect.ImmutableList;
 
-import io.graceland.plugins.Plugin;
+import io.graceland.plugin.Plugin;
 
 /**
  * An application defines what plugins will be loaded into the {@link io.graceland.platform.Platform}.

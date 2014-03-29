@@ -5,7 +5,7 @@ import io.graceland.platform.PlatformConfiguration;
 
 /**
  * This class is an escape hatch for customizing Dropwizard to your own liking, without having to be forced to use the
- * helper methods in the {@link io.graceland.plugins.AbstractPlugin}.
+ * helper methods in the {@link io.graceland.plugin.AbstractPlugin}.
  * <p/>
  * All configurators are ran during the run phase of a Dropwizard service.
  */

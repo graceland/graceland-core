@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-import io.graceland.plugins.Plugin;
+import io.graceland.plugin.Plugin;
 import io.graceland.testing.TestModes;
 
 import static org.hamcrest.Matchers.contains;

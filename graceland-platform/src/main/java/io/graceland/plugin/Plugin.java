@@ -1,4 +1,4 @@
-package io.graceland.plugins;
+package io.graceland.plugin;
 
 import com.google.inject.Module;
 

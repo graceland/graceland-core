@@ -4,7 +4,7 @@ import org.junit.Test;
 import com.google.common.collect.ImmutableList;
 
 import io.graceland.application.Application;
-import io.graceland.plugins.Plugin;
+import io.graceland.plugin.Plugin;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;

@@ -1,4 +1,4 @@
-package io.graceland.plugins;
+package io.graceland.plugin;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.google.common.base.Preconditions;

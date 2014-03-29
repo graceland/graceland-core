@@ -79,7 +79,7 @@ public class DefaultPlatform
     /**
      * Ran when the Dropwizard service starts up. This method is responsible for setting up the
      * {@link io.dropwizard.setup.Environment} using the bindings from the loaded
-     * {@link io.graceland.plugins.Plugin}s.
+     * {@link io.graceland.plugin.Plugin}s.
      *
      * @param configuration Provided by Dropwizard.
      * @param environment   Provided by Dropwizard.
