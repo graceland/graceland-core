@@ -1,4 +1,4 @@
-package io.graceland.platforms;
+package io.graceland.platform;
 
 public class DefaultPlatformConfiguration extends PlatformConfiguration {
 }

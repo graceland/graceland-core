@@ -1,7 +1,7 @@
 package io.graceland.inject;
 
 import io.dropwizard.setup.Bootstrap;
-import io.graceland.platforms.DefaultPlatformConfiguration;
+import io.graceland.platform.DefaultPlatformConfiguration;
 
 /**
  * This class is an escape hatch for customizing Dropwizard to your own liking, without having to be forced to use the

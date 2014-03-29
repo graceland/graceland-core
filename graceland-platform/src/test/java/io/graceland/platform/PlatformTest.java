@@ -1,4 +1,4 @@
-package io.graceland.platforms;
+package io.graceland.platform;
 
 import org.junit.Test;
 

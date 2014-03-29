@@ -1,4 +1,4 @@
-package io.graceland.platforms;
+package io.graceland.platform;
 
 import com.google.common.base.Preconditions;
 
@@ -14,10 +14,10 @@ public final class Platforms {
     }
 
     /**
-     * The simplest platform scenario - uses the {@link io.graceland.platforms.DefaultPlatform}.
+     * The simplest platform scenario - uses the {@link io.graceland.platform.DefaultPlatform}.
      *
      * @param application The application to use.
-     * @return A working {@link io.graceland.platforms.DefaultPlatform}.
+     * @return A working {@link io.graceland.platform.DefaultPlatform}.
      */
     public static Platform forApplication(Application application) {
         Preconditions.checkNotNull(application, "Application cannot be null.");

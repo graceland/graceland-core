@@ -8,7 +8,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 
 import io.dropwizard.setup.Environment;
-import io.graceland.platforms.PlatformConfiguration;
+import io.graceland.platform.PlatformConfiguration;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

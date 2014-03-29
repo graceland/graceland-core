@@ -1,4 +1,4 @@
-package io.graceland.platforms;
+package io.graceland.platform;
 
 /**
  * The platform is the foundation for Graceland. It's where an {@link io.graceland.applications.Application}
