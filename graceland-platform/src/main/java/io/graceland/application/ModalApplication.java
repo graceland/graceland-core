@@ -58,12 +58,14 @@ public abstract class ModalApplication<E extends Enum<E>>
         return Optional.absent();
     }
 
+    /**
+     * Called when plugins are being determined. It will be called with the proper mode, allowing specific plugins to
+     * be loaded based on the mode.
+     *
+     * @param mode The mode to configure the {@link io.graceland.application.Application} to.
+     */
     protected abstract void configureFor(E mode);
 
-    /**
-     * Called when plugins are being determined. The {@link #configureFor(Enum)} method will be called with the proper
-     * mode, allowing specific plugins to be loaded based on the mode.
-     */
     @Override
     protected void configure() {
         configureFor(mode);

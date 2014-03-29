@@ -18,6 +18,10 @@ import io.dropwizard.servlets.tasks.Task;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
 
+/**
+ * Wraps a Guice {@link com.google.inject.Injector} and provides helper functions to help deal with bindings coming
+ * from a {@link com.google.inject.multibindings.Multibinder}.
+ */
 public class InjectorWrapper {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(InjectorWrapper.class);
@@ -27,6 +31,12 @@ public class InjectorWrapper {
         this.injector = Preconditions.checkNotNull(injector, "Injector cannot be null.");
     }
 
+    /**
+     * Returns a wrapper around the {@link com.google.inject.Injector}.
+     *
+     * @param injector The injector to wrap.
+     * @return A wrapper.
+     */
     public static InjectorWrapper wrap(Injector injector) {
         Preconditions.checkNotNull(injector, "Injector cannot be null.");
         return new InjectorWrapper(injector);
@@ -57,6 +67,16 @@ public class InjectorWrapper {
         return builder.build();
     }
 
+    // =============================
+    // Injector Multibinder Wrappers
+    // =============================
+
+    /**
+     * Returns a Set of Jersey components, including Providers and Resources. These objects are usually fed into the
+     * {@link io.dropwizard.jersey.setup.JerseyEnvironment#register(Class)} method.
+     *
+     * @return An immutable set of Jersey components.
+     */
     @SuppressWarnings("unchecked")
     public ImmutableSet<Object> getJerseyComponents() {
         Set<Object> components = getInstancesSafely(Keys.JerseyComponents);

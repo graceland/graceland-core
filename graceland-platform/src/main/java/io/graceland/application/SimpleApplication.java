@@ -10,6 +10,7 @@ import io.graceland.plugin.Plugin;
  * {@link #configure()}.
  */
 public abstract class SimpleApplication implements Application {
+
     private final ImmutableList.Builder<Plugin> pluginBuilder = ImmutableList.builder();
     protected ImmutableList<Plugin> plugins = null;
 
@@ -18,11 +19,6 @@ public abstract class SimpleApplication implements Application {
      */
     protected abstract void configure();
 
-    /**
-     * Adds the plugin to the list of plugins that will be loaded.
-     *
-     * @param plugin The plugin to load.
-     */
     @Override
     public void loadPlugin(Plugin plugin) {
         Preconditions.checkNotNull(plugin, "Plugin cannot be null.");

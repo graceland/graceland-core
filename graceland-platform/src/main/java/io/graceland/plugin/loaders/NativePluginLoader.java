@@ -9,7 +9,12 @@ import com.google.common.base.Preconditions;
 import io.graceland.application.Application;
 import io.graceland.plugin.Plugin;
 
+/**
+ * Uses the java {@link java.util.ServiceLoader} to discover plugins and loads them into the
+ * {@link io.graceland.application.Application}.
+ */
 public class NativePluginLoader implements PluginLoader {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(NativePluginLoader.class);
 
     @Override

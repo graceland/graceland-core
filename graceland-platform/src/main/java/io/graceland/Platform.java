@@ -28,6 +28,7 @@ import io.graceland.inject.InjectorWrapper;
  * is ran, providing the underlying functionality using a Dropwizard service (via an {@link io.dropwizard.Application}).
  */
 public class Platform extends io.dropwizard.Application<PlatformConfiguration> {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(Platform.class);
     private InjectorWrapper wrapper;
     private DropwizardModule dropwizardModule = new DropwizardModule();

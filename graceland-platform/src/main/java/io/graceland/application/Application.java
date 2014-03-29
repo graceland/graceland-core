@@ -12,6 +12,11 @@ import io.graceland.plugin.Plugin;
  */
 public interface Application {
 
+    /**
+     * Adds the plugin to the list of plugins that will be loaded.
+     *
+     * @param plugin The plugin to load.
+     */
     void loadPlugin(Plugin plugin);
 
     /**

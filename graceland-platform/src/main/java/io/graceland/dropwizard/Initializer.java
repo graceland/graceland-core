@@ -10,6 +10,7 @@ import io.graceland.PlatformConfiguration;
  * All initializers are ran during the initialize phase of a Dropwizard service.
  */
 public interface Initializer {
+
     /**
      * The method that will be called during the Dropwizard's {@link io.dropwizard.Application#initialize(io.dropwizard.setup.Bootstrap)}
      * method.

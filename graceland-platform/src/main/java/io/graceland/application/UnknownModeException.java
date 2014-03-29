@@ -1,6 +1,11 @@
 package io.graceland.application;
 
+/**
+ * An exception that is thrown when an unknown mode is passed to a {@link io.graceland.application.ModalApplication}
+ * through the command line arguments.
+ */
 public class UnknownModeException extends RuntimeException {
+
     private final Class modeClass;
     private final String candidate;
 
