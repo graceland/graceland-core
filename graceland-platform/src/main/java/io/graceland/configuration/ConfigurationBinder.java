@@ -1,12 +1,15 @@
 package io.graceland.configuration;
 
+import java.lang.annotation.Annotation;
+
 import com.google.common.base.Preconditions;
 import com.google.inject.Binder;
 
 public class ConfigurationBinder<T extends Configuration> {
 
-    private Class<T> klass;
+    private final Class<T> klass;
     private final Binder binder;
+    private Class<? extends Annotation> annotation = null;
 
     ConfigurationBinder(Class<T> klass, Binder binder) {
         this.klass = Preconditions.checkNotNull(klass, "Configuration Class cannot be null.");
@@ -18,6 +21,18 @@ public class ConfigurationBinder<T extends Configuration> {
     }
 
     public void toInstance(T configuration) {
-        binder.bind(klass).toInstance(configuration);
+        Preconditions.checkNotNull(configuration, "Configuration Instance cannot be null.");
+
+        if (annotation == null) {
+            binder.bind(klass).toInstance(configuration);
+
+        } else {
+            binder.bind(klass).annotatedWith(annotation).toInstance(configuration);
+        }
+    }
+
+    public ConfigurationBinder<T> annotatedWith(Class<? extends Annotation> annotation) {
+        this.annotation = Preconditions.checkNotNull(annotation, "Annotation cannot be null.");
+        return this;
     }
 }
