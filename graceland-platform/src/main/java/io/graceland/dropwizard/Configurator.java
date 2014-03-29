@@ -1,4 +1,4 @@
-package io.graceland.inject;
+package io.graceland.dropwizard;
 
 import io.dropwizard.setup.Environment;
 import io.graceland.platform.PlatformConfiguration;

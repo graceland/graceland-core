@@ -1,4 +1,4 @@
-package io.graceland.inject;
+package io.graceland.dropwizard;
 
 import org.junit.Test;
 

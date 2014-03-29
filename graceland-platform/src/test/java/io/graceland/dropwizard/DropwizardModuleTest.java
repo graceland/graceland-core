@@ -1,4 +1,4 @@
-package io.graceland.inject;
+package io.graceland.dropwizard;
 
 import org.junit.Test;
 import com.codahale.metrics.MetricRegistry;
@@ -8,6 +8,7 @@ import com.google.inject.Injector;
 import com.google.inject.Key;
 
 import io.dropwizard.setup.Environment;
+import io.graceland.inject.Graceland;
 import io.graceland.platform.PlatformConfiguration;
 
 import static org.hamcrest.Matchers.is;

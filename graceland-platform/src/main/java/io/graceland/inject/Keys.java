@@ -9,6 +9,8 @@ import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
+import io.graceland.dropwizard.Configurator;
+import io.graceland.dropwizard.Initializer;
 
 /**
  * A utility class that defines helpful classes and static variables. They are used when interacting with Guice's
@@ -34,6 +36,7 @@ public final class Keys {
     public static final Key<Set<Class<? extends Initializer>>> InitializerClasses = Key.get(TypeLiterals.InitializerClassSet, Graceland.class);
     public static final Key<Set<Configurator>> Configurators = Key.get(TypeLiterals.ConfiguratorSet, Graceland.class);
     public static final Key<Set<Class<? extends Configurator>>> ConfiguratorClasses = Key.get(TypeLiterals.ConfiguratorClassSet, Graceland.class);
+
     protected Keys() {
         // utility class
     }

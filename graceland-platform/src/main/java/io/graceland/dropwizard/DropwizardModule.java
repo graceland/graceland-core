@@ -1,4 +1,4 @@
-package io.graceland.inject;
+package io.graceland.dropwizard;
 
 import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -7,6 +7,7 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
 
 import io.dropwizard.setup.Environment;
+import io.graceland.inject.Graceland;
 import io.graceland.platform.PlatformConfiguration;
 
 public class DropwizardModule extends AbstractModule {
