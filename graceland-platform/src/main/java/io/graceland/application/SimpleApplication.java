@@ -1,9 +1,9 @@
-package io.graceland.applications;
+package io.graceland.application;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 
-import io.graceland.plugins.Plugin;
+import io.graceland.plugin.Plugin;
 
 /**
  * A simple application implementation that lets the developer define what plugins are loaded using an abstract method

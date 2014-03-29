@@ -1,9 +1,9 @@
-package io.graceland.applications;
+package io.graceland.application;
 
 import org.junit.Test;
 import com.google.common.collect.ImmutableList;
 
-import io.graceland.plugins.Plugin;
+import io.graceland.plugin.Plugin;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;

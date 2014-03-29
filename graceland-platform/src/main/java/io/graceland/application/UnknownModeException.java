@@ -1,4 +1,4 @@
-package io.graceland.applications;
+package io.graceland.application;
 
 public class UnknownModeException extends RuntimeException {
     private final Class modeClass;

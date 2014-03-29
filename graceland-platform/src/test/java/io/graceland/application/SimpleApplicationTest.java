@@ -1,10 +1,10 @@
-package io.graceland.applications;
+package io.graceland.application;
 
 import java.util.List;
 
 import org.junit.Test;
 
-import io.graceland.plugins.Plugin;
+import io.graceland.plugin.Plugin;
 
 import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;

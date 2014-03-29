@@ -9,6 +9,8 @@ import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
+import io.graceland.dropwizard.Configurator;
+import io.graceland.dropwizard.Initializer;
 
 /**
  * A utility class that defines helpful classes and static variables. They are used when interacting with Guice's
@@ -81,6 +83,7 @@ public final class TypeLiterals {
     };
     public static TypeLiteral<Set<Class<? extends Configurator>>> ConfiguratorClassSet = new TypeLiteral<Set<Class<? extends Configurator>>>() {
     };
+
     protected TypeLiterals() {
         // utility class
     }

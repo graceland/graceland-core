@@ -1,4 +1,4 @@
-package io.graceland.plugins;
+package io.graceland.plugin;
 
 import com.codahale.metrics.health.HealthCheck;
 import com.google.common.base.Preconditions;
@@ -9,9 +9,9 @@ import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
-import io.graceland.inject.Configurator;
+import io.graceland.dropwizard.Configurator;
+import io.graceland.dropwizard.Initializer;
 import io.graceland.inject.Graceland;
-import io.graceland.inject.Initializer;
 import io.graceland.inject.TypeLiterals;
 
 /**

@@ -1,4 +1,4 @@
-package io.graceland.applications;
+package io.graceland.application;
 
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;

@@ -15,6 +15,8 @@ import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
+import io.graceland.dropwizard.Configurator;
+import io.graceland.dropwizard.Initializer;
 
 public class InjectorWrapper {
 

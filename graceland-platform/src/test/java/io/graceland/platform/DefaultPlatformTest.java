@@ -1,4 +1,4 @@
-package io.graceland.platforms;
+package io.graceland.platform;
 
 import org.junit.Test;
 import com.codahale.metrics.health.HealthCheck;
@@ -14,12 +14,12 @@ import io.dropwizard.servlets.tasks.Task;
 import io.dropwizard.setup.AdminEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.graceland.applications.Application;
-import io.graceland.applications.SimpleApplication;
-import io.graceland.inject.Configurator;
-import io.graceland.inject.Initializer;
-import io.graceland.plugins.AbstractPlugin;
-import io.graceland.plugins.Plugin;
+import io.graceland.application.Application;
+import io.graceland.application.SimpleApplication;
+import io.graceland.dropwizard.Configurator;
+import io.graceland.dropwizard.Initializer;
+import io.graceland.plugin.AbstractPlugin;
+import io.graceland.plugin.Plugin;
 import io.graceland.testing.TestBundle;
 import io.graceland.testing.TestCommand;
 import io.graceland.testing.TestConfigurator;
@@ -41,6 +41,19 @@ public class DefaultPlatformTest extends PlatformTest {
     @Override
     protected Platform newPlatform(Application application) {
         return new DefaultPlatform(application);
+    }
+
+    @Test
+    public void can_build_with_application() {
+        Application application = mock(Application.class);
+        when(application.getPlugins()).thenReturn(ImmutableList.<Plugin>of());
+
+        DefaultPlatform.forApplication(application);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void cannot_build_with_null_application() {
+        DefaultPlatform.forApplication(null);
     }
 
     @Test(expected = NullPointerException.class)

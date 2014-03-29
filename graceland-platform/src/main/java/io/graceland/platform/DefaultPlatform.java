@@ -1,4 +1,4 @@
-package io.graceland.platforms;
+package io.graceland.platform;
 
 import java.util.List;
 
@@ -17,10 +17,10 @@ import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import io.graceland.applications.Application;
-import io.graceland.inject.Configurator;
-import io.graceland.inject.DropwizardModule;
-import io.graceland.inject.Initializer;
+import io.graceland.application.Application;
+import io.graceland.dropwizard.Configurator;
+import io.graceland.dropwizard.DropwizardModule;
+import io.graceland.dropwizard.Initializer;
 import io.graceland.inject.InjectorWrapper;
 
 /**
@@ -44,6 +44,17 @@ public class DefaultPlatform
 
         Injector injector = Guice.createInjector(modules);
         this.wrapper = InjectorWrapper.wrap(injector);
+    }
+
+    /**
+     * The simplest use case.
+     *
+     * @param application The application to use.
+     * @return A working {@link DefaultPlatform}.
+     */
+    public static Platform forApplication(Application application) {
+        Preconditions.checkNotNull(application, "Application cannot be null.");
+        return new DefaultPlatform(application);
     }
 
     @Override
@@ -79,7 +90,7 @@ public class DefaultPlatform
     /**
      * Ran when the Dropwizard service starts up. This method is responsible for setting up the
      * {@link io.dropwizard.setup.Environment} using the bindings from the loaded
-     * {@link io.graceland.plugins.Plugin}s.
+     * {@link io.graceland.plugin.Plugin}s.
      *
      * @param configuration Provided by Dropwizard.
      * @param environment   Provided by Dropwizard.

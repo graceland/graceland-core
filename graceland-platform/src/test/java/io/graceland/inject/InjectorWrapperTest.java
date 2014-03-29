@@ -4,7 +4,7 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
-import io.graceland.plugins.AbstractPlugin;
+import io.graceland.plugin.AbstractPlugin;
 import io.graceland.testing.TestBundle;
 import io.graceland.testing.TestCommand;
 import io.graceland.testing.TestHealthCheck;

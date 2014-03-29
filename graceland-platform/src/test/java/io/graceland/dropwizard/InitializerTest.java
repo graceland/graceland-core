@@ -1,9 +1,9 @@
-package io.graceland.inject;
+package io.graceland.dropwizard;
 
 import org.junit.Test;
 
 import io.dropwizard.setup.Bootstrap;
-import io.graceland.platforms.DefaultPlatformConfiguration;
+import io.graceland.platform.DefaultPlatformConfiguration;
 
 import static org.mockito.Mockito.mock;
 

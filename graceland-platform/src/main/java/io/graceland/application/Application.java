@@ -1,11 +1,11 @@
-package io.graceland.applications;
+package io.graceland.application;
 
 import com.google.common.collect.ImmutableList;
 
-import io.graceland.plugins.Plugin;
+import io.graceland.plugin.Plugin;
 
 /**
- * An application defines what plugins will be loaded into the {@link io.graceland.platforms.Platform}.
+ * An application defines what plugins will be loaded into the {@link io.graceland.platform.Platform}.
  * <p/>
  * It is the user-defined portion of the framework, determining what features, modules, plugins, resources, etc. are
  * loaded and used in this service.

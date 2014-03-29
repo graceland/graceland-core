@@ -1,7 +1,7 @@
-package io.graceland.platforms;
+package io.graceland.platform;
 
 /**
- * The platform is the foundation for Graceland. It's where an {@link io.graceland.applications.Application}
+ * The platform is the foundation for Graceland. It's where an {@link io.graceland.application.Application}
  * is ran, providing the underlying functionality using a Dropwizard service (via an {@link io.dropwizard.Application}).
  */
 public interface Platform {
