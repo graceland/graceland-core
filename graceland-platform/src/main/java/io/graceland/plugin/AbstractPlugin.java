@@ -9,6 +9,8 @@ import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
+import io.graceland.configuration.Configuration;
+import io.graceland.configuration.ConfigurationBinder;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
 import io.graceland.inject.Graceland;
@@ -258,5 +260,10 @@ public abstract class AbstractPlugin
     protected void bindConfigurator(Class<? extends Configurator> configuratorClass) {
         Preconditions.checkNotNull(configuratorClass, "Configurator Class cannot be null.");
         getConfiguratorClassBinder().addBinding().toInstance(configuratorClass);
+    }
+
+    protected <T extends Configuration> ConfigurationBinder<T> bindConfiguration(Class<T> configurationClass) {
+        Preconditions.checkNotNull(configurationClass, "Configuration Class cannot be null.");
+        return ConfigurationBinder.forClass(configurationClass, binder());
     }
 }
