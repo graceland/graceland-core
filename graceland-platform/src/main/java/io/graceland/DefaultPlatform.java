@@ -1,4 +1,4 @@
-package io.graceland.platform;
+package io.graceland;
 
 import java.util.List;
 

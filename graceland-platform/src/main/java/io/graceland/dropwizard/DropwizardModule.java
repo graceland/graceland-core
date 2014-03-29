@@ -8,7 +8,7 @@ import com.google.inject.Provides;
 
 import io.dropwizard.setup.Environment;
 import io.graceland.inject.Graceland;
-import io.graceland.platform.PlatformConfiguration;
+import io.graceland.PlatformConfiguration;
 
 public class DropwizardModule extends AbstractModule {
 

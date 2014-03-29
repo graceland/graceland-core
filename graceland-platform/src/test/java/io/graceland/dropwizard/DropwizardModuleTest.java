@@ -9,7 +9,7 @@ import com.google.inject.Key;
 
 import io.dropwizard.setup.Environment;
 import io.graceland.inject.Graceland;
-import io.graceland.platform.PlatformConfiguration;
+import io.graceland.PlatformConfiguration;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

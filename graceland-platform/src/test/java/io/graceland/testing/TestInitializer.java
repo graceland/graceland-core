@@ -2,7 +2,7 @@ package io.graceland.testing;
 
 import io.dropwizard.setup.Bootstrap;
 import io.graceland.dropwizard.Initializer;
-import io.graceland.platform.DefaultPlatformConfiguration;
+import io.graceland.DefaultPlatformConfiguration;
 
 public class TestInitializer implements Initializer {
     @Override

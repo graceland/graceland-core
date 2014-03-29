@@ -1,7 +1,8 @@
-package io.graceland.platform;
+package io.graceland;
 
 import org.junit.Test;
 
+import io.graceland.Platform;
 import io.graceland.application.Application;
 
 import static org.mockito.Mockito.mock;

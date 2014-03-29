@@ -1,4 +1,4 @@
-package io.graceland.platform;
+package io.graceland;
 
 import org.junit.Test;
 import com.codahale.metrics.health.HealthCheck;

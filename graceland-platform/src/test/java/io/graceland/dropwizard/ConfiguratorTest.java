@@ -3,7 +3,7 @@ package io.graceland.dropwizard;
 import org.junit.Test;
 
 import io.dropwizard.setup.Environment;
-import io.graceland.platform.PlatformConfiguration;
+import io.graceland.PlatformConfiguration;
 
 import static org.mockito.Mockito.mock;
 
