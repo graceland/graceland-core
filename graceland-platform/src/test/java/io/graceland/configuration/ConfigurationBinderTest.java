@@ -9,7 +9,9 @@ import com.google.inject.Key;
 
 import io.graceland.testing.TestAnnotation;
 import io.graceland.testing.TestConfiguration;
+import io.graceland.testing.TestFileConfiguration;
 
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.mock;
@@ -40,14 +42,15 @@ public class ConfigurationBinderTest {
         Injector injector = Guice.createInjector(new AbstractModule() {
             @Override
             protected void configure() {
-                ConfigurationBinder<TestConfiguration> configurationBinder = ConfigurationBinder.forClass(TestConfiguration.class, binder());
-                configurationBinder.toInstance(expectedConfiguration);
+                ConfigurationBinder
+                        .forClass(TestConfiguration.class, binder())
+                        .toInstance(expectedConfiguration);
             }
         });
 
-        TestConfiguration actualConfiguration = injector.getInstance(TestConfiguration.class);
-
-        assertThat(actualConfiguration, is(expectedConfiguration));
+        assertThat(
+                injector.getInstance(Key.get(TestConfiguration.class)),
+                is(expectedConfiguration));
     }
 
     @Test
@@ -57,13 +60,65 @@ public class ConfigurationBinderTest {
         Injector injector = Guice.createInjector(new AbstractModule() {
             @Override
             protected void configure() {
-                ConfigurationBinder<TestConfiguration> configurationBinder = ConfigurationBinder.forClass(TestConfiguration.class, binder());
-                configurationBinder.annotatedWith(TestAnnotation.class).toInstance(expectedConfiguration);
+                ConfigurationBinder
+                        .forClass(TestConfiguration.class, binder())
+                        .annotatedWith(TestAnnotation.class).toInstance(expectedConfiguration);
             }
         });
 
-        TestConfiguration actualConfiguration = injector.getInstance(Key.get(TestConfiguration.class, TestAnnotation.class));
+        assertThat(
+                injector.getInstance(Key.get(TestConfiguration.class, TestAnnotation.class)),
+                is(expectedConfiguration));
+    }
 
-        assertThat(actualConfiguration, is(expectedConfiguration));
+    @Test(expected = NullPointerException.class)
+    public void toFile_cannot_bind_null() {
+        ConfigurationBinder
+                .forClass(TestConfiguration.class, mock(Binder.class))
+                .toFile(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void toFile_file_must_exist() {
+        ConfigurationBinder
+                .forClass(TestFileConfiguration.class, mock(Binder.class))
+                .toFile("file/does/not/exist.yml");
+    }
+
+    @Test
+    public void toFile_binds_to_a_file() {
+        final TestFileConfiguration expectedConfiguration = new TestFileConfiguration(123, "xyz");
+
+        Injector injector = Guice.createInjector(new AbstractModule() {
+            @Override
+            protected void configure() {
+                ConfigurationBinder
+                        .forClass(TestFileConfiguration.class, binder())
+                        .toFile("src/test/resources/fixtures/io/graceland/configuration/ConfigurationBinder/test.yml");
+            }
+        });
+
+        assertThat(
+                injector.getInstance(Key.get(TestFileConfiguration.class)),
+                equalTo(expectedConfiguration));
+    }
+
+    @Test
+    public void toFile_binds_to_an_annotated_file() {
+        final TestFileConfiguration expectedConfiguration = new TestFileConfiguration(123, "xyz");
+
+        Injector injector = Guice.createInjector(new AbstractModule() {
+            @Override
+            protected void configure() {
+                ConfigurationBinder
+                        .forClass(TestFileConfiguration.class, binder())
+                        .annotatedWith(TestAnnotation.class)
+                        .toFile("src/test/resources/fixtures/io/graceland/configuration/ConfigurationBinder/test.yml");
+            }
+        });
+
+        assertThat(
+                injector.getInstance(Key.get(TestFileConfiguration.class, TestAnnotation.class)),
+                equalTo(expectedConfiguration));
     }
 }
