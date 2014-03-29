@@ -30,51 +30,38 @@ import static org.mockito.Mockito.mock;
 public class AbstractPluginTest {
 
     @Test
-    public void all_binds_work() {
+    public void jersey_binds_work() {
         final Object jerseyComponent = new Object();
         final Class<TestResource> jerseyComponentClass = TestResource.class;
-        final Managed managed = mock(Managed.class);
-        final Class<TestManaged> managedClass = TestManaged.class;
-        final HealthCheck healthCheck = mock(HealthCheck.class);
-        final Class<TestHealthCheck> healthCheckClass = TestHealthCheck.class;
-        final Task task = mock(Task.class);
-        final Class<TestTask> taskClass = TestTask.class;
-        final Bundle bundle = mock(Bundle.class);
-        final Class<TestBundle> bundleClass = TestBundle.class;
-        final Command command = mock(Command.class);
-        final Class<TestCommand> commandClass = TestCommand.class;
-
-        final TestConfiguration testConfiguration = new TestConfiguration();
 
         Injector injector = Guice.createInjector(new AbstractPlugin() {
             @Override
             protected void configure() {
                 bindJerseyComponent(jerseyComponent);
                 bindJerseyComponent(jerseyComponentClass);
-                bindManaged(managed);
-                bindManaged(managedClass);
-                bindHealthCheck(healthCheck);
-                bindHealthCheck(healthCheckClass);
-                bindTask(task);
-                bindTask(taskClass);
-
-                bindBundle(bundle);
-                bindBundle(bundleClass);
-                bindCommand(command);
-                bindCommand(commandClass);
-
-                bindConfiguration(TestConfiguration.class).toInstance(testConfiguration);
             }
         });
 
-        // Jersey Sets
         Set<Object> jerseySet = injector.getInstance(Keys.JerseyComponents);
 
         assertThat(jerseySet, hasSize(2));
         assertThat(jerseySet, hasItem(jerseyComponent));
         assertThat(jerseySet, hasItem(TestResource.class));
+    }
 
-        // Managed
+    @Test
+    public void managed_binds_work() {
+        final Managed managed = mock(Managed.class);
+        final Class<TestManaged> managedClass = TestManaged.class;
+
+        Injector injector = Guice.createInjector(new AbstractPlugin() {
+            @Override
+            protected void configure() {
+                bindManaged(managed);
+                bindManaged(managedClass);
+            }
+        });
+
         Set<Managed> managedSet = injector.getInstance(Keys.ManagedObjects);
         Set<Class<? extends Managed>> managedClassSet = injector.getInstance(Keys.ManagedObjectClasses);
 
@@ -82,8 +69,21 @@ public class AbstractPluginTest {
         assertThat(managedSet, hasItem(managed));
         assertThat(managedClassSet, hasSize(1));
         assertThat(managedClassSet, hasItem(TestManaged.class));
+    }
 
-        // Health Checks
+    @Test
+    public void healthcheck_binds_work() {
+        final HealthCheck healthCheck = mock(HealthCheck.class);
+        final Class<TestHealthCheck> healthCheckClass = TestHealthCheck.class;
+
+        Injector injector = Guice.createInjector(new AbstractPlugin() {
+            @Override
+            protected void configure() {
+                bindHealthCheck(healthCheck);
+                bindHealthCheck(healthCheckClass);
+            }
+        });
+
         Set<HealthCheck> healthCheckSet = injector.getInstance(Keys.HealthChecks);
         Set<Class<? extends HealthCheck>> healthCheckClassSet = injector.getInstance(Keys.HealthCheckClasses);
 
@@ -91,8 +91,21 @@ public class AbstractPluginTest {
         assertThat(healthCheckSet, hasItem(healthCheck));
         assertThat(healthCheckClassSet, hasSize(1));
         assertThat(healthCheckClassSet, hasItem(TestHealthCheck.class));
+    }
 
-        // Tasks
+    @Test
+    public void task_binds_work() {
+        final Task task = mock(Task.class);
+        final Class<TestTask> taskClass = TestTask.class;
+
+        Injector injector = Guice.createInjector(new AbstractPlugin() {
+            @Override
+            protected void configure() {
+                bindTask(task);
+                bindTask(taskClass);
+            }
+        });
+
         Set<Task> taskSet = injector.getInstance(Keys.Tasks);
         Set<Class<? extends Task>> taskClassSet = injector.getInstance(Keys.TaskClasses);
 
@@ -100,8 +113,21 @@ public class AbstractPluginTest {
         assertThat(taskSet, hasItem(task));
         assertThat(taskClassSet, hasSize(1));
         assertThat(taskClassSet, hasItem(TestTask.class));
+    }
 
-        // Bundles
+    @Test
+    public void bundle_binds_work() {
+        final Bundle bundle = mock(Bundle.class);
+        final Class<TestBundle> bundleClass = TestBundle.class;
+
+        Injector injector = Guice.createInjector(new AbstractPlugin() {
+            @Override
+            protected void configure() {
+                bindBundle(bundle);
+                bindBundle(bundleClass);
+            }
+        });
+
         Set<Bundle> bundleSet = injector.getInstance(Keys.Bundles);
         Set<Class<? extends Bundle>> bundleClassSet = injector.getInstance(Keys.BundleClasses);
 
@@ -109,8 +135,21 @@ public class AbstractPluginTest {
         assertThat(bundleSet, hasItem(bundle));
         assertThat(bundleClassSet, hasSize(1));
         assertThat(bundleClassSet, hasItem(TestBundle.class));
+    }
 
-        // Commands
+    @Test
+    public void command_binds_work() {
+        final Command command = mock(Command.class);
+        final Class<TestCommand> commandClass = TestCommand.class;
+
+        Injector injector = Guice.createInjector(new AbstractPlugin() {
+            @Override
+            protected void configure() {
+                bindCommand(command);
+                bindCommand(commandClass);
+            }
+        });
+
         Set<Command> commandSet = injector.getInstance(Keys.Commands);
         Set<Class<? extends Command>> commandClassSet = injector.getInstance(Keys.CommandClasses);
 
@@ -118,8 +157,19 @@ public class AbstractPluginTest {
         assertThat(commandSet, hasItem(command));
         assertThat(commandClassSet, hasSize(1));
         assertThat(commandClassSet, hasItem(TestCommand.class));
+    }
 
-        // Configurations
+    @Test
+    public void configuration_binds_work() {
+        final TestConfiguration testConfiguration = new TestConfiguration();
+
+        Injector injector = Guice.createInjector(new AbstractPlugin() {
+            @Override
+            protected void configure() {
+                bindConfiguration(TestConfiguration.class).toInstance(testConfiguration);
+            }
+        });
+
         TestConfiguration actualConfiguration = injector.getInstance(Key.get(TestConfiguration.class));
 
         assertThat(actualConfiguration, is(testConfiguration));
