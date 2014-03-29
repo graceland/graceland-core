@@ -23,7 +23,8 @@ public abstract class SimpleApplication implements Application {
      *
      * @param plugin The plugin to load.
      */
-    protected void loadPlugin(Plugin plugin) {
+    @Override
+    public void loadPlugin(Plugin plugin) {
         Preconditions.checkNotNull(plugin, "Plugin cannot be null.");
         pluginBuilder.add(plugin);
     }
