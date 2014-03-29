@@ -1,7 +1,7 @@
 package io.graceland.dropwizard;
 
 import io.dropwizard.setup.Bootstrap;
-import io.graceland.DefaultPlatformConfiguration;
+import io.graceland.PlatformConfiguration;
 
 /**
  * This class is an escape hatch for customizing Dropwizard to your own liking, without having to be forced to use the
@@ -16,5 +16,5 @@ public interface Initializer {
      *
      * @param bootstrap Provided by Dropwizard.
      */
-    void initialize(Bootstrap<DefaultPlatformConfiguration> bootstrap);
+    void initialize(Bootstrap<PlatformConfiguration> bootstrap);
 }
