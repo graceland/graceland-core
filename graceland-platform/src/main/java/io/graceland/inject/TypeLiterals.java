@@ -9,6 +9,7 @@ import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
+import io.graceland.configuration.Configuration;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
 
@@ -18,8 +19,16 @@ import io.graceland.dropwizard.Initializer;
  */
 public final class TypeLiterals {
 
+    protected TypeLiterals() {
+        // utility class
+    }
+
+    // ==============================
+    // Jersey Component Type Literals
+    // ==============================
     public static TypeLiteral<Set<Object>> ObjectSet = new TypeLiteral<Set<Object>>() {
     };
+
     // ==========================
     // Health Check Type Literals
     // ==========================
@@ -29,6 +38,7 @@ public final class TypeLiterals {
     };
     public static TypeLiteral<Set<Class<? extends HealthCheck>>> HealthCheckClassSet = new TypeLiteral<Set<Class<? extends HealthCheck>>>() {
     };
+
     // =====================
     // Managed Type Literals
     // =====================
@@ -38,6 +48,7 @@ public final class TypeLiterals {
     };
     public static TypeLiteral<Set<Class<? extends Managed>>> ManagedClassSet = new TypeLiteral<Set<Class<? extends Managed>>>() {
     };
+
     // ==================
     // Task Type Literals
     // ==================
@@ -47,6 +58,7 @@ public final class TypeLiterals {
     };
     public static TypeLiteral<Set<Class<? extends Task>>> TaskClassSet = new TypeLiteral<Set<Class<? extends Task>>>() {
     };
+
     // ====================
     // Bundle Type Literals
     // ====================
@@ -56,6 +68,7 @@ public final class TypeLiterals {
     };
     public static TypeLiteral<Set<Class<? extends Bundle>>> BundleClassSet = new TypeLiteral<Set<Class<? extends Bundle>>>() {
     };
+
     // =====================
     // Command Type Literals
     // =====================
@@ -65,6 +78,7 @@ public final class TypeLiterals {
     };
     public static TypeLiteral<Set<Class<? extends Command>>> CommandClassSet = new TypeLiteral<Set<Class<? extends Command>>>() {
     };
+
     // =========================
     // Initializer Type Literals
     // =========================
@@ -74,6 +88,7 @@ public final class TypeLiterals {
     };
     public static TypeLiteral<Set<Class<? extends Initializer>>> InitializerClassSet = new TypeLiteral<Set<Class<? extends Initializer>>>() {
     };
+
     // ==========================
     // Configurator Type Literals
     // ==========================
@@ -84,7 +99,13 @@ public final class TypeLiterals {
     public static TypeLiteral<Set<Class<? extends Configurator>>> ConfiguratorClassSet = new TypeLiteral<Set<Class<? extends Configurator>>>() {
     };
 
-    protected TypeLiterals() {
-        // utility class
-    }
+    // ===========================
+    // Configuration Type Literals
+    // ===========================
+    public static TypeLiteral<Class<? extends Configuration>> ConfigurationClass = new TypeLiteral<Class<? extends Configuration>>() {
+    };
+    public static TypeLiteral<Set<Configuration>> ConfigurationSet = new TypeLiteral<Set<Configuration>>() {
+    };
+    public static TypeLiteral<Set<Class<? extends Configuration>>> ConfigurationClassSet = new TypeLiteral<Set<Class<? extends Configuration>>>() {
+    };
 }
