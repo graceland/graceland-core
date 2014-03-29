@@ -46,6 +46,17 @@ public class DefaultPlatform
         this.wrapper = InjectorWrapper.wrap(injector);
     }
 
+    /**
+     * The simplest use case.
+     *
+     * @param application The application to use.
+     * @return A working {@link DefaultPlatform}.
+     */
+    public static Platform forApplication(Application application) {
+        Preconditions.checkNotNull(application, "Application cannot be null.");
+        return new DefaultPlatform(application);
+    }
+
     @Override
     public void start(String[] args) throws Exception {
         Preconditions.checkNotNull(args, "Arguments cannot be null.");

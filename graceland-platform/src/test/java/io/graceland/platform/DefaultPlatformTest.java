@@ -43,6 +43,19 @@ public class DefaultPlatformTest extends PlatformTest {
         return new DefaultPlatform(application);
     }
 
+    @Test
+    public void can_build_with_application() {
+        Application application = mock(Application.class);
+        when(application.getPlugins()).thenReturn(ImmutableList.<Plugin>of());
+
+        DefaultPlatform.forApplication(application);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void cannot_build_with_null_application() {
+        DefaultPlatform.forApplication(null);
+    }
+
     @Test(expected = NullPointerException.class)
     public void constructed_with_valid_application() {
         new DefaultPlatform(null);
