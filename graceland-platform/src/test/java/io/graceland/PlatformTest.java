@@ -1,4 +1,4 @@
-package io.graceland.platform;
+package io.graceland;
 
 import org.junit.Test;
 import com.codahale.metrics.health.HealthCheck;
@@ -36,11 +36,17 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class DefaultPlatformTest extends PlatformTest {
+public class PlatformTest {
 
-    @Override
     protected Platform newPlatform(Application application) {
-        return new DefaultPlatform(application);
+        return new Platform(application);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void start_must_be_called_with_args() throws Exception {
+        Application application = mock(Application.class);
+        Platform platform = newPlatform(application);
+        platform.start(null);
     }
 
     @Test
@@ -48,17 +54,17 @@ public class DefaultPlatformTest extends PlatformTest {
         Application application = mock(Application.class);
         when(application.getPlugins()).thenReturn(ImmutableList.<Plugin>of());
 
-        DefaultPlatform.forApplication(application);
+        Platform.forApplication(application);
     }
 
     @Test(expected = NullPointerException.class)
     public void cannot_build_with_null_application() {
-        DefaultPlatform.forApplication(null);
+        Platform.forApplication(null);
     }
 
     @Test(expected = NullPointerException.class)
     public void constructed_with_valid_application() {
-        new DefaultPlatform(null);
+        new Platform(null);
     }
 
     @Test
@@ -66,7 +72,7 @@ public class DefaultPlatformTest extends PlatformTest {
         Application application = mock(Application.class);
         when(application.getPlugins()).thenReturn(ImmutableList.<Plugin>of());
         String[] args = new String[]{};
-        new DefaultPlatform(application).start(args);
+        new Platform(application).start(args);
     }
 
     @Test
@@ -103,7 +109,7 @@ public class DefaultPlatformTest extends PlatformTest {
             }
         };
 
-        DefaultPlatformConfiguration configuration = mock(DefaultPlatformConfiguration.class);
+        PlatformConfiguration configuration = mock(PlatformConfiguration.class);
 
         Environment environment = mock(Environment.class);
         LifecycleEnvironment lifecycleEnvironment = mock(LifecycleEnvironment.class);
@@ -116,7 +122,7 @@ public class DefaultPlatformTest extends PlatformTest {
         when(environment.healthChecks()).thenReturn(healthCheckRegistry);
         when(environment.admin()).thenReturn(adminEnvironment);
 
-        new DefaultPlatform(application).run(configuration, environment);
+        new Platform(application).run(configuration, environment);
 
         verify(jerseyEnvironment).register(eq(jerseyComponent));
         verify(jerseyEnvironment).register(isA(TestResource.class));
@@ -159,9 +165,9 @@ public class DefaultPlatformTest extends PlatformTest {
             }
         };
 
-        Bootstrap<DefaultPlatformConfiguration> bootstrap = mock(Bootstrap.class);
+        Bootstrap<PlatformConfiguration> bootstrap = mock(Bootstrap.class);
 
-        new DefaultPlatform(application).initialize(bootstrap);
+        new Platform(application).initialize(bootstrap);
 
         verify(bootstrap).addBundle(eq(bundle));
         verify(bootstrap).addBundle(isA(TestBundle.class));

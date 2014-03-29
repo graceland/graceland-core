@@ -3,7 +3,7 @@ package io.graceland.dropwizard;
 import org.junit.Test;
 
 import io.dropwizard.setup.Bootstrap;
-import io.graceland.platform.DefaultPlatformConfiguration;
+import io.graceland.PlatformConfiguration;
 
 import static org.mockito.Mockito.mock;
 
@@ -13,7 +13,7 @@ public class InitializerTest {
 
     @Test
     public void initialize_requires_a_bootstrap() {
-        Bootstrap<DefaultPlatformConfiguration> bootstrap = mock(Bootstrap.class);
+        Bootstrap<PlatformConfiguration> bootstrap = mock(Bootstrap.class);
         initializer.initialize(bootstrap);
     }
 }
