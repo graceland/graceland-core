@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Preconditions;
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.Singleton;
 
 import io.dropwizard.setup.Environment;
 import io.graceland.PlatformConfiguration;
@@ -40,6 +41,7 @@ public class DropwizardModule extends AbstractModule {
     }
 
     @Provides
+    @Singleton
     @Graceland
     PlatformConfiguration providePlatformConfiguration() {
         Preconditions.checkState(configuration != null, "Configuration has not been set.");
@@ -47,6 +49,15 @@ public class DropwizardModule extends AbstractModule {
     }
 
     @Provides
+    @Singleton
+    @Graceland
+    Environment provideEnvironment() {
+        Preconditions.checkState(environment != null, "Environment has not been set.");
+        return environment;
+    }
+
+    @Provides
+    @Singleton
     @Graceland
     ObjectMapper provideObjectMapper() {
         Preconditions.checkState(environment != null, "Environment has not been set.");
@@ -54,6 +65,7 @@ public class DropwizardModule extends AbstractModule {
     }
 
     @Provides
+    @Singleton
     @Graceland
     MetricRegistry provideMetricRegistry() {
         Preconditions.checkState(environment != null, "Environment has not been set.");

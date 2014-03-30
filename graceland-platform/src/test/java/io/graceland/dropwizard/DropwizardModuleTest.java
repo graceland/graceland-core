@@ -39,6 +39,11 @@ public class DropwizardModuleTest {
     }
 
     @Test(expected = IllegalStateException.class)
+    public void must_set_environemnt_before_providing_environment() {
+        dropwizardModule.provideEnvironment();
+    }
+
+    @Test(expected = IllegalStateException.class)
     public void must_set_environment_before_providing_object_mapper() {
         dropwizardModule.provideObjectMapper();
     }
@@ -52,6 +57,7 @@ public class DropwizardModuleTest {
     public void use_environment_to_provide_object_mapper() {
         dropwizardModule.setup(configuration, environment);
         dropwizardModule.provideObjectMapper();
+
         verify(environment).getObjectMapper();
     }
 
@@ -59,6 +65,7 @@ public class DropwizardModuleTest {
     public void use_environment_to_provide_metric_registry() {
         dropwizardModule.setup(configuration, environment);
         dropwizardModule.provideMetricRegistry();
+
         verify(environment).metrics();
     }
 
@@ -76,9 +83,11 @@ public class DropwizardModuleTest {
         PlatformConfiguration actualConfiguration = injector.getInstance(Key.get(PlatformConfiguration.class, Graceland.class));
         ObjectMapper actualObjectMapper = injector.getInstance(Key.get(ObjectMapper.class, Graceland.class));
         MetricRegistry actualMetricRegistry = injector.getInstance(Key.get(MetricRegistry.class, Graceland.class));
+        Environment actualEnvironment = injector.getInstance(Key.get(Environment.class, Graceland.class));
 
         assertThat(actualConfiguration, is(configuration));
         assertThat(actualObjectMapper, is(objectMapper));
         assertThat(actualMetricRegistry, is(metricRegistry));
+        assertThat(actualEnvironment, is(environment));
     }
 }
