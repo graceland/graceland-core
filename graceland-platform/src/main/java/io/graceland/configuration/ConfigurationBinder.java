@@ -10,6 +10,12 @@ import com.google.inject.Binder;
 import io.dropwizard.configuration.ConfigurationFactory;
 import io.dropwizard.jackson.Jackson;
 
+/**
+ * Used to bring a configuration into the dependency graph. The simplest way is to load it from a file or to a specific
+ * instance.
+ *
+ * @param <Config> The specific class of the Configuration.
+ */
 public class ConfigurationBinder<Config extends Configuration> {
 
     private final Class<Config> configClass;
@@ -21,6 +27,15 @@ public class ConfigurationBinder<Config extends Configuration> {
         this.binder = Preconditions.checkNotNull(binder, "Binder cannot be null.");
     }
 
+    /**
+     * The starting point for using a ConfigurationBinder. A class needs to be passed through, along with a binder to
+     * eventually bind the configuration with.
+     *
+     * @param klass  The Configuration Class to load & bind.
+     * @param binder The {@link com.google.inject.Binder} from the {@link io.graceland.plugin.AbstractPlugin}.
+     * @param <T>    The Configuration Type.
+     * @return Returns a working ConfigurationBinder using the provided type and class information.
+     */
     public static <T extends Configuration> ConfigurationBinder<T> forClass(Class<T> klass, Binder binder) {
         return new ConfigurationBinder<>(klass, binder);
     }
@@ -30,6 +45,11 @@ public class ConfigurationBinder<Config extends Configuration> {
         return this;
     }
 
+    /**
+     * This method will bind the class to a particular instance.
+     *
+     * @param configuration
+     */
     public void toInstance(Config configuration) {
         Preconditions.checkNotNull(configuration, "Configuration Instance cannot be null.");
 
@@ -41,6 +61,12 @@ public class ConfigurationBinder<Config extends Configuration> {
         }
     }
 
+    /**
+     * This method will load the configuration using a {@link io.dropwizard.configuration.ConfigurationFactory} to load
+     * the file from the current relative working directory.
+     *
+     * @param fileName The filename to load.
+     */
     public void toFile(String fileName) {
         Preconditions.checkNotNull(fileName, "File Name cannot be null.");
 
