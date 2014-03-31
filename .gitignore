@@ -81,3 +81,6 @@ target/
 ### Python ###
 *.pyc
 initScript.sh
+
+### Sphinx ###
+docs/build
