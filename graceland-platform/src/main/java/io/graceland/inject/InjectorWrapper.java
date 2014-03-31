@@ -42,29 +42,33 @@ public class InjectorWrapper {
         return new InjectorWrapper(injector);
     }
 
-    private <T> Set<T> getInstancesSafely(Key<Set<T>> key) {
+    // =====================
+    // KISS Helper Functions
+    // =====================
+
+    private <T> Set<T> getSetSafely(Key<Set<T>> key) {
         try {
             return injector.getInstance(key);
 
         } catch (ConfigurationException e) {
-            LOGGER.debug("No bindings found for key: {}", key);
+            LOGGER.debug("No bindings found for key: {}", key, e);
             return ImmutableSet.of();
         }
     }
 
-    private <T> ImmutableSet<T> getGeneric(Key<Set<T>> concreteKey, Key<Set<Class<? extends T>>> classKey) {
-        Set<T> instances = getInstancesSafely(concreteKey);
-        Set<Class<? extends T>> classes = getInstancesSafely(classKey);
+    private <T> ImmutableSet<T> getAndBuildInstances(Key<Set<T>> concreteKey, Key<Set<Class<? extends T>>> classKey) {
+        Set<T> instances = getSetSafely(concreteKey);
+        Set<Class<? extends T>> classes = getSetSafely(classKey);
 
-        ImmutableSet.Builder<T> builder = ImmutableSet.builder();
-        builder.addAll(instances);
+        ImmutableSet.Builder<T> allInstances = ImmutableSet.builder();
+        allInstances.addAll(instances);
 
         for (Class<? extends T> klass : classes) {
-            T managed = injector.getInstance(klass);
-            builder.add(managed);
+            T instance = injector.getInstance(klass);
+            allInstances.add(instance);
         }
 
-        return builder.build();
+        return allInstances.build();
     }
 
     // =============================
@@ -79,7 +83,7 @@ public class InjectorWrapper {
      */
     @SuppressWarnings("unchecked")
     public ImmutableSet<Object> getJerseyComponents() {
-        Set<Object> components = getInstancesSafely(Keys.JerseyComponents);
+        Set<Object> components = getSetSafely(Keys.JerseyComponents);
 
         ImmutableSet.Builder<Object> builder = ImmutableSet.builder();
 
@@ -97,30 +101,30 @@ public class InjectorWrapper {
     }
 
     public ImmutableSet<HealthCheck> getHealthChecks() {
-        return getGeneric(Keys.HealthChecks, Keys.HealthCheckClasses);
+        return getAndBuildInstances(Keys.HealthChecks, Keys.HealthCheckClasses);
     }
 
     public ImmutableSet<Task> getTasks() {
-        return getGeneric(Keys.Tasks, Keys.TaskClasses);
+        return getAndBuildInstances(Keys.Tasks, Keys.TaskClasses);
     }
 
     public ImmutableSet<Managed> getManaged() {
-        return getGeneric(Keys.ManagedObjects, Keys.ManagedObjectClasses);
+        return getAndBuildInstances(Keys.ManagedObjects, Keys.ManagedObjectClasses);
     }
 
     public ImmutableSet<Bundle> getBundles() {
-        return getGeneric(Keys.Bundles, Keys.BundleClasses);
+        return getAndBuildInstances(Keys.Bundles, Keys.BundleClasses);
     }
 
     public ImmutableSet<Command> getCommands() {
-        return getGeneric(Keys.Commands, Keys.CommandClasses);
+        return getAndBuildInstances(Keys.Commands, Keys.CommandClasses);
     }
 
     public ImmutableSet<Initializer> getInitializers() {
-        return getGeneric(Keys.Initializers, Keys.InitializerClasses);
+        return getAndBuildInstances(Keys.Initializers, Keys.InitializerClasses);
     }
 
     public ImmutableSet<Configurator> getConfigurators() {
-        return getGeneric(Keys.Configurators, Keys.ConfiguratorClasses);
+        return getAndBuildInstances(Keys.Configurators, Keys.ConfiguratorClasses);
     }
 }
