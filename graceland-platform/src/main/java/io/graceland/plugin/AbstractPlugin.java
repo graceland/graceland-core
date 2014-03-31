@@ -52,123 +52,102 @@ public abstract class AbstractPlugin
     // Private Binder Creators
     // =======================
 
-    private Multibinder<Object> getJerseyBinder() {
-        if (jerseyBinder == null) {
-            jerseyBinder = Multibinder.newSetBinder(binder(), Object.class, Graceland.class);
-        }
+    private boolean bindersBuilt = false;
 
+    private void buildBinders() {
+        if (!bindersBuilt) {
+            jerseyBinder = Multibinder.newSetBinder(binder(), Object.class, Graceland.class);
+            managedBinder = Multibinder.newSetBinder(binder(), Managed.class, Graceland.class);
+            managedClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.ManagedClass, Graceland.class);
+            healthCheckBinder = Multibinder.newSetBinder(binder(), HealthCheck.class, Graceland.class);
+            healthCheckClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.HealthCheckClass, Graceland.class);
+            taskBinder = Multibinder.newSetBinder(binder(), Task.class, Graceland.class);
+            taskClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.TaskClass, Graceland.class);
+            bundleBinder = Multibinder.newSetBinder(binder(), Bundle.class, Graceland.class);
+            bundleClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.BundleClass, Graceland.class);
+            commandBinder = Multibinder.newSetBinder(binder(), Command.class, Graceland.class);
+            commandClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.CommandClass, Graceland.class);
+            initializerBinder = Multibinder.newSetBinder(binder(), Initializer.class, Graceland.class);
+            initializerClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.InitializerClass, Graceland.class);
+            configuratorBinder = Multibinder.newSetBinder(binder(), Configurator.class, Graceland.class);
+            configuratorClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.ConfiguratorClass, Graceland.class);
+
+            bindersBuilt = true;
+        }
+    }
+
+    private Multibinder<Object> getJerseyBinder() {
+        buildBinders();
         return jerseyBinder;
     }
 
     private Multibinder<Managed> getManagedBinder() {
-        if (managedBinder == null) {
-            managedBinder = Multibinder.newSetBinder(binder(), Managed.class, Graceland.class);
-        }
-
+        buildBinders();
         return managedBinder;
     }
 
     private Multibinder<Class<? extends Managed>> getManagedClassBinder() {
-        if (managedClassBinder == null) {
-            managedClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.ManagedClass, Graceland.class);
-        }
-
+        buildBinders();
         return managedClassBinder;
     }
 
     private Multibinder<HealthCheck> getHealthCheckBinder() {
-        if (healthCheckBinder == null) {
-            healthCheckBinder = Multibinder.newSetBinder(binder(), HealthCheck.class, Graceland.class);
-        }
-
+        buildBinders();
         return healthCheckBinder;
     }
 
     private Multibinder<Class<? extends HealthCheck>> getHealthCheckClassBinder() {
-        if (healthCheckClassBinder == null) {
-            healthCheckClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.HealthCheckClass, Graceland.class);
-        }
-
+        buildBinders();
         return healthCheckClassBinder;
     }
 
     private Multibinder<Task> getTaskBinder() {
-        if (taskBinder == null) {
-            taskBinder = Multibinder.newSetBinder(binder(), Task.class, Graceland.class);
-        }
-
+        buildBinders();
         return taskBinder;
     }
 
     private Multibinder<Class<? extends Task>> getTaskClassBinder() {
-        if (taskClassBinder == null) {
-            taskClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.TaskClass, Graceland.class);
-        }
-
+        buildBinders();
         return taskClassBinder;
     }
 
     private Multibinder<Bundle> getBundleBinder() {
-        if (bundleBinder == null) {
-            bundleBinder = Multibinder.newSetBinder(binder(), Bundle.class, Graceland.class);
-        }
-
+        buildBinders();
         return bundleBinder;
     }
 
     private Multibinder<Class<? extends Bundle>> getBundleClassBinder() {
-        if (bundleClassBinder == null) {
-            bundleClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.BundleClass, Graceland.class);
-        }
-
+        buildBinders();
         return bundleClassBinder;
     }
 
     private Multibinder<Command> getCommandBinder() {
-        if (commandBinder == null) {
-            commandBinder = Multibinder.newSetBinder(binder(), Command.class, Graceland.class);
-        }
-
+        buildBinders();
         return commandBinder;
     }
 
     private Multibinder<Class<? extends Command>> getCommandClassBinder() {
-        if (commandClassBinder == null) {
-            commandClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.CommandClass, Graceland.class);
-        }
-
+        buildBinders();
         return commandClassBinder;
     }
 
     private Multibinder<Initializer> getInitializerBinder() {
-        if (initializerBinder == null) {
-            initializerBinder = Multibinder.newSetBinder(binder(), Initializer.class, Graceland.class);
-        }
-
+        buildBinders();
         return initializerBinder;
     }
 
     private Multibinder<Class<? extends Initializer>> getInitializerClassBinder() {
-        if (initializerClassBinder == null) {
-            initializerClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.InitializerClass, Graceland.class);
-        }
-
+        buildBinders();
         return initializerClassBinder;
     }
 
     private Multibinder<Configurator> getConfiguratorBinder() {
-        if (configuratorBinder == null) {
-            configuratorBinder = Multibinder.newSetBinder(binder(), Configurator.class, Graceland.class);
-        }
-
+        buildBinders();
         return configuratorBinder;
     }
 
     private Multibinder<Class<? extends Configurator>> getConfiguratorClassBinder() {
-        if (configuratorClassBinder == null) {
-            configuratorClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.ConfiguratorClass, Graceland.class);
-        }
-
+        buildBinders();
         return configuratorClassBinder;
     }
 
