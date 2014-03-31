@@ -17,6 +17,14 @@ public class NativePluginLoader implements PluginLoader {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(NativePluginLoader.class);
 
+    NativePluginLoader() {
+        // do nothing
+    }
+
+    public static NativePluginLoader newLoader() {
+        return new NativePluginLoader();
+    }
+
     @Override
     public void loadInto(Application application) {
         Preconditions.checkNotNull(application, "Application cannot be null.");

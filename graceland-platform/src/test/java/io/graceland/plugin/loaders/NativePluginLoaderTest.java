@@ -23,7 +23,7 @@ public class NativePluginLoaderTest extends PluginLoaderTest<NativePluginLoader>
 
     @Override
     protected NativePluginLoader newPluginLoader() {
-        return new NativePluginLoader();
+        return NativePluginLoader.newLoader();
     }
 
     @Test
