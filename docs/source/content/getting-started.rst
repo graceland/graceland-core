@@ -1,6 +1,6 @@
-########
-Overview
-########
+###############
+Getting Started
+###############
 
 .. rubric:: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
             incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
@@ -10,8 +10,8 @@ Overview
             mollit anim id est laborum.
 
 
-Motivation
-==========
+Step 1
+======
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
 labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -20,9 +20,8 @@ esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat n
 in culpa qui officia deserunt mollit anim id est laborum.
 
 
-
-Architecture
-============
+Step 2
+======
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
 labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
@@ -31,7 +30,7 @@ esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat n
 in culpa qui officia deserunt mollit anim id est laborum.
 
 
-Modules
+Profit!
 =======
 
 Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
