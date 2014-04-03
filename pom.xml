@@ -27,6 +27,22 @@
         <powermock.version>1.5.4</powermock.version>
     </properties>
 
+    <developers>
+        <developer>
+            <name>Javier Campanini</name>
+            <email>jmcampanini@gmail.com</email>
+            <timezone>-8</timezone>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
     <build>
         <plugins>
             <plugin>
