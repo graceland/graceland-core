@@ -8,8 +8,8 @@ Escape Hatches
             hatches so you could access the low-level dropwizard functionality when needed.
 
 
-Using the Dropwizard Application
-================================
+How We Use Dropwizard
+=====================
 
 A dropwizard application has two primary phases: ``initialize`` and ``run``. Graceland provides
 access to the dropwizard components in each of those phases.

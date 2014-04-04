@@ -9,18 +9,17 @@ Metrics Graphite
 Host-Aware Graphite Reporter
 ============================
 
-Reports metrics periodically to Graphite. The prefix provided may include a variable ``%s`` that will be replaced with
-the current machine's host name. This is so each instance of the service will have a different prefix, letting you
-differentiate each machine's activity, while still letting you roll them up using Graphite.
+Reports metrics periodically to Graphite. The prefix provided may include a variable ``%s`` that
+will be replaced with the current machine's host name. This is so each instance of the service will
+have a different prefix, letting you differentiate each machine's activity, while still letting you
+roll them up using Graphite.
 
 
-Caveats
--------
+.. note:: If no hostname can be determined, the variable is removed and any double dots ``..`` will
+          be replaced with single dots.
 
-- If no hostname can be determined, the variable is removed and any double dots ``..`` will be replaced with single
-  dots.
-- All non-alphanumeric characters (including dots) in the hostname will be replaced with an underscore ``_`` to ensure
-  graphite does not break down the hostname variable.
+.. note:: All non-alphanumeric characters (including dots) in the hostname will be replaced with an
+          underscore ``_`` to ensure graphite does not break down the hostname variable.
 
 
 Configuration

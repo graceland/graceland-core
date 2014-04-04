@@ -318,8 +318,8 @@ the configuration.
     }
 
 .. note:: The configuration files look for the files relative to the current working directory
-          (``CWD``). If you're running into trouble finding a configuration file, check to see what the
-          ``CWD`` is.
+          (``cwd``). If you're running into trouble finding a configuration file, check to see what the
+          ``cwd`` is.
 
 Now let's see how we can bring this new ``CountingMachine`` into our application.
 
