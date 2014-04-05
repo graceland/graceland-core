@@ -48,10 +48,6 @@ public abstract class AbstractPlugin
     private Multibinder<Configurator> configuratorBinder = null;
     private Multibinder<Class<? extends Configurator>> configuratorClassBinder = null;
 
-    // =======================
-    // Private Binder Creators
-    // =======================
-
     private boolean bindersBuilt = false;
 
     private void buildBinders() {
@@ -76,81 +72,6 @@ public abstract class AbstractPlugin
         }
     }
 
-    private Multibinder<Object> getJerseyBinder() {
-        buildBinders();
-        return jerseyBinder;
-    }
-
-    private Multibinder<Managed> getManagedBinder() {
-        buildBinders();
-        return managedBinder;
-    }
-
-    private Multibinder<Class<? extends Managed>> getManagedClassBinder() {
-        buildBinders();
-        return managedClassBinder;
-    }
-
-    private Multibinder<HealthCheck> getHealthCheckBinder() {
-        buildBinders();
-        return healthCheckBinder;
-    }
-
-    private Multibinder<Class<? extends HealthCheck>> getHealthCheckClassBinder() {
-        buildBinders();
-        return healthCheckClassBinder;
-    }
-
-    private Multibinder<Task> getTaskBinder() {
-        buildBinders();
-        return taskBinder;
-    }
-
-    private Multibinder<Class<? extends Task>> getTaskClassBinder() {
-        buildBinders();
-        return taskClassBinder;
-    }
-
-    private Multibinder<Bundle> getBundleBinder() {
-        buildBinders();
-        return bundleBinder;
-    }
-
-    private Multibinder<Class<? extends Bundle>> getBundleClassBinder() {
-        buildBinders();
-        return bundleClassBinder;
-    }
-
-    private Multibinder<Command> getCommandBinder() {
-        buildBinders();
-        return commandBinder;
-    }
-
-    private Multibinder<Class<? extends Command>> getCommandClassBinder() {
-        buildBinders();
-        return commandClassBinder;
-    }
-
-    private Multibinder<Initializer> getInitializerBinder() {
-        buildBinders();
-        return initializerBinder;
-    }
-
-    private Multibinder<Class<? extends Initializer>> getInitializerClassBinder() {
-        buildBinders();
-        return initializerClassBinder;
-    }
-
-    private Multibinder<Configurator> getConfiguratorBinder() {
-        buildBinders();
-        return configuratorBinder;
-    }
-
-    private Multibinder<Class<? extends Configurator>> getConfiguratorClassBinder() {
-        buildBinders();
-        return configuratorClassBinder;
-    }
-
     // ========================
     // Helper Binding Functions
     // ========================
@@ -168,77 +89,92 @@ public abstract class AbstractPlugin
      */
     protected void bindJerseyComponent(Object resource) {
         Preconditions.checkNotNull(resource, "Resource cannot be null.");
-        getJerseyBinder().addBinding().toInstance(resource);
+        buildBinders();
+        jerseyBinder.addBinding().toInstance(resource);
     }
 
     protected void bindManaged(Managed managed) {
         Preconditions.checkNotNull(managed, "Managed Object cannot be null.");
-        getManagedBinder().addBinding().toInstance(managed);
+        buildBinders();
+        managedBinder.addBinding().toInstance(managed);
     }
 
     protected void bindManaged(Class<? extends Managed> managedClass) {
         Preconditions.checkNotNull(managedClass, "Managed Class cannot be null.");
-        getManagedClassBinder().addBinding().toInstance(managedClass);
+        buildBinders();
+        managedClassBinder.addBinding().toInstance(managedClass);
     }
 
     protected void bindHealthCheck(HealthCheck healthCheck) {
         Preconditions.checkNotNull(healthCheck, "Health Check cannot be null.");
-        getHealthCheckBinder().addBinding().toInstance(healthCheck);
+        buildBinders();
+        healthCheckBinder.addBinding().toInstance(healthCheck);
     }
 
     protected void bindHealthCheck(Class<? extends HealthCheck> healthCheckClass) {
         Preconditions.checkNotNull(healthCheckClass, "Health Check Class cannot be null.");
-        getHealthCheckClassBinder().addBinding().toInstance(healthCheckClass);
+        buildBinders();
+        healthCheckClassBinder.addBinding().toInstance(healthCheckClass);
     }
 
     protected void bindTask(Task task) {
         Preconditions.checkNotNull(task, "Task cannot be null.");
-        getTaskBinder().addBinding().toInstance(task);
+        buildBinders();
+        taskBinder.addBinding().toInstance(task);
     }
 
     protected void bindTask(Class<? extends Task> taskClass) {
         Preconditions.checkNotNull(taskClass, "Task Class cannot be null.");
-        getTaskClassBinder().addBinding().toInstance(taskClass);
+        buildBinders();
+        taskClassBinder.addBinding().toInstance(taskClass);
     }
 
     protected void bindBundle(Bundle bundle) {
         Preconditions.checkNotNull(bundle, "Bundle cannot be null.");
-        getBundleBinder().addBinding().toInstance(bundle);
+        buildBinders();
+        bundleBinder.addBinding().toInstance(bundle);
     }
 
     protected void bindBundle(Class<? extends Bundle> bundleClass) {
         Preconditions.checkNotNull(bundleClass, "Bundle Class cannot be null.");
-        getBundleClassBinder().addBinding().toInstance(bundleClass);
+        buildBinders();
+        bundleClassBinder.addBinding().toInstance(bundleClass);
     }
 
     protected void bindCommand(Command command) {
         Preconditions.checkNotNull(command, "Command cannot be null.");
-        getCommandBinder().addBinding().toInstance(command);
+        buildBinders();
+        commandBinder.addBinding().toInstance(command);
     }
 
     protected void bindCommand(Class<? extends Command> commandClass) {
         Preconditions.checkNotNull(commandClass, "Command Class cannot be null.");
-        getCommandClassBinder().addBinding().toInstance(commandClass);
+        buildBinders();
+        commandClassBinder.addBinding().toInstance(commandClass);
     }
 
     protected void bindInitializer(Initializer initializer) {
         Preconditions.checkNotNull(initializer, "Initializer cannot be null.");
-        getInitializerBinder().addBinding().toInstance(initializer);
+        buildBinders();
+        initializerBinder.addBinding().toInstance(initializer);
     }
 
     protected void bindInitializer(Class<? extends Initializer> initializerClass) {
         Preconditions.checkNotNull(initializerClass, "Initializer Class cannot be null.");
-        getInitializerClassBinder().addBinding().toInstance(initializerClass);
+        buildBinders();
+        initializerClassBinder.addBinding().toInstance(initializerClass);
     }
 
     protected void bindConfigurator(Configurator configurator) {
         Preconditions.checkNotNull(configurator, "Configurator cannot be null.");
-        getConfiguratorBinder().addBinding().toInstance(configurator);
+        buildBinders();
+        configuratorBinder.addBinding().toInstance(configurator);
     }
 
     protected void bindConfigurator(Class<? extends Configurator> configuratorClass) {
         Preconditions.checkNotNull(configuratorClass, "Configurator Class cannot be null.");
-        getConfiguratorClassBinder().addBinding().toInstance(configuratorClass);
+        buildBinders();
+        configuratorClassBinder.addBinding().toInstance(configuratorClass);
     }
 
     protected <T extends Configuration> ConfigurationBinder<T> bindConfiguration(Class<T> configurationClass) {
