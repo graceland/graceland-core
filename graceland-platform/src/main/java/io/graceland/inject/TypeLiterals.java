@@ -9,7 +9,6 @@ import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
-import io.graceland.configuration.Configuration;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
 
@@ -97,15 +96,5 @@ public final class TypeLiterals {
     public static TypeLiteral<Set<Configurator>> ConfiguratorSet = new TypeLiteral<Set<Configurator>>() {
     };
     public static TypeLiteral<Set<Class<? extends Configurator>>> ConfiguratorClassSet = new TypeLiteral<Set<Class<? extends Configurator>>>() {
-    };
-
-    // ===========================
-    // Configuration Type Literals
-    // ===========================
-    public static TypeLiteral<Class<? extends Configuration>> ConfigurationClass = new TypeLiteral<Class<? extends Configuration>>() {
-    };
-    public static TypeLiteral<Set<Configuration>> ConfigurationSet = new TypeLiteral<Set<Configuration>>() {
-    };
-    public static TypeLiteral<Set<Class<? extends Configuration>>> ConfigurationClassSet = new TypeLiteral<Set<Class<? extends Configuration>>>() {
     };
 }

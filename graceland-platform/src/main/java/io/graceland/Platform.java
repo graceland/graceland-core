@@ -30,8 +30,8 @@ import io.graceland.inject.InjectorWrapper;
 public class Platform extends io.dropwizard.Application<PlatformConfiguration> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Platform.class);
-    private InjectorWrapper wrapper;
-    private DropwizardModule dropwizardModule = new DropwizardModule();
+    private final InjectorWrapper wrapper;
+    private final DropwizardModule dropwizardModule = new DropwizardModule();
 
     Platform(Application application) {
         Preconditions.checkNotNull(application, "Application cannot be null.");

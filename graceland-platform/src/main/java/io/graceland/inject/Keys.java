@@ -9,7 +9,6 @@ import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
-import io.graceland.configuration.Configuration;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
 
@@ -57,8 +56,4 @@ public final class Keys {
     // Configurators
     public static final Key<Set<Configurator>> Configurators = Key.get(TypeLiterals.ConfiguratorSet, Graceland.class);
     public static final Key<Set<Class<? extends Configurator>>> ConfiguratorClasses = Key.get(TypeLiterals.ConfiguratorClassSet, Graceland.class);
-
-    // Configurations
-    public static final Key<Set<Configuration>> Configurations = Key.get(TypeLiterals.ConfigurationSet, Graceland.class);
-    public static final Key<Set<Class<? extends Configuration>>> ConfigurationClasses = Key.get(TypeLiterals.ConfigurationClassSet, Graceland.class);
 }
