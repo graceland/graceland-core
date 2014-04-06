@@ -21,6 +21,7 @@ import io.graceland.application.Application;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.DropwizardModule;
 import io.graceland.dropwizard.Initializer;
+import io.graceland.filter.FilterSpec;
 import io.graceland.inject.InjectorWrapper;
 
 /**
@@ -130,6 +131,16 @@ public class Platform extends io.dropwizard.Application<PlatformConfiguration> {
         for (Task task : wrapper.getTasks()) {
             environment.admin().addTask(task);
             LOGGER.debug("Registered Task: {}", task.getClass().getCanonicalName());
+        }
+
+        for (FilterSpec filterSpec : wrapper.getFilters()) {
+            environment.servlets().addFilter(
+                    filterSpec.getFilter().getClass().getSimpleName(),
+                    filterSpec.getFilter());
+
+            LOGGER.debug("Registered Filter {}: {}",
+                    filterSpec.getFilter().getClass().getSimpleName(),
+                    filterSpec.getFilter().getClass().getCanonicalName());
         }
     }
 }
