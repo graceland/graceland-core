@@ -4,6 +4,7 @@ import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
+import io.graceland.filter.FilterSpec;
 import io.graceland.plugin.AbstractPlugin;
 import io.graceland.testing.TestBundle;
 import io.graceland.testing.TestCommand;
@@ -65,6 +66,8 @@ public class InjectorWrapperTest {
 
                         bindCommand(new TestCommand());
                         bindCommand(TestCommand.class);
+
+                        bindFilter(mock(FilterSpec.class));
                     }
                 }
         );
@@ -77,5 +80,6 @@ public class InjectorWrapperTest {
         assertThat(wrapper.getManaged().size(), is(2));
         assertThat(wrapper.getBundles().size(), is(2));
         assertThat(wrapper.getCommands().size(), is(2));
+        assertThat(wrapper.getFilters().size(), is(1));
     }
 }

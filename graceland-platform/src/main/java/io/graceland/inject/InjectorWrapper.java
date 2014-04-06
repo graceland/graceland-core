@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.codahale.metrics.health.HealthCheck;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.ConfigurationException;
 import com.google.inject.Injector;
@@ -17,6 +18,7 @@ import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
+import io.graceland.filter.FilterSpec;
 
 /**
  * Wraps a Guice {@link com.google.inject.Injector} and provides helper functions to help deal with bindings coming
@@ -126,5 +128,9 @@ public class InjectorWrapper {
 
     public ImmutableSet<Configurator> getConfigurators() {
         return getAndBuildInstances(Keys.Configurators, Keys.ConfiguratorClasses);
+    }
+
+    public ImmutableList<FilterSpec> getFilters() {
+        return ImmutableList.copyOf(getSetSafely(Keys.FilterSpecs));
     }
 }
