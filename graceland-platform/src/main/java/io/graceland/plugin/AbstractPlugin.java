@@ -1,5 +1,7 @@
 package io.graceland.plugin;
 
+import javax.servlet.Filter;
+
 import com.codahale.metrics.health.HealthCheck;
 import com.google.common.base.Preconditions;
 import com.google.inject.AbstractModule;
@@ -13,6 +15,7 @@ import io.graceland.configuration.Configuration;
 import io.graceland.configuration.ConfigurationBinder;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
+import io.graceland.filter.FilterBinder;
 import io.graceland.inject.Graceland;
 import io.graceland.inject.TypeLiterals;
 
@@ -180,5 +183,17 @@ public abstract class AbstractPlugin
     protected <T extends Configuration> ConfigurationBinder<T> bindConfiguration(Class<T> configurationClass) {
         Preconditions.checkNotNull(configurationClass, "Configuration Class cannot be null.");
         return ConfigurationBinder.forClass(configurationClass, binder());
+    }
+
+    protected FilterBinder buildFilter(Filter filter) {
+        Preconditions.checkNotNull(filter, "Filter cannot be null.");
+        buildBinders();
+        return FilterBinder.forInstance(binder(), filter);
+    }
+
+    protected FilterBinder buildFilter(Class<? extends Filter> filterClass) {
+        Preconditions.checkNotNull(filterClass, "Filter Class cannot be null.");
+        buildBinders();
+        return FilterBinder.forClass(binder(), filterClass);
     }
 }

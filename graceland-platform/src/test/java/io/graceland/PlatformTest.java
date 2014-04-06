@@ -1,5 +1,7 @@
 package io.graceland;
 
+import javax.servlet.Filter;
+
 import org.junit.Test;
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
@@ -8,6 +10,7 @@ import com.google.common.collect.ImmutableList;
 import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.jersey.setup.JerseyEnvironment;
+import io.dropwizard.jetty.setup.ServletEnvironment;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.lifecycle.setup.LifecycleEnvironment;
 import io.dropwizard.servlets.tasks.Task;
@@ -23,6 +26,7 @@ import io.graceland.plugin.Plugin;
 import io.graceland.testing.TestBundle;
 import io.graceland.testing.TestCommand;
 import io.graceland.testing.TestConfigurator;
+import io.graceland.testing.TestFilter;
 import io.graceland.testing.TestHealthCheck;
 import io.graceland.testing.TestInitializer;
 import io.graceland.testing.TestManaged;
@@ -88,6 +92,10 @@ public class PlatformTest {
         final Configurator configurator = mock(Configurator.class);
         final Class<TestConfigurator> configuratorClass = TestConfigurator.class;
 
+        final String filterName = "my-filter-name";
+        final Filter filter = mock(Filter.class);
+        final Class<TestFilter> filterClass = TestFilter.class;
+
         Application application = new SimpleApplication() {
             @Override
             protected void configure() {
@@ -104,6 +112,8 @@ public class PlatformTest {
                         bindTask(taskClass);
                         bindConfigurator(configurator);
                         bindConfigurator(configuratorClass);
+                        buildFilter(filter).withName(filterName).withPriority(999).bind();
+                        buildFilter(filterClass).withPriority(0).bind();
                     }
                 });
             }
@@ -116,11 +126,13 @@ public class PlatformTest {
         JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
         HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
         AdminEnvironment adminEnvironment = mock(AdminEnvironment.class);
+        ServletEnvironment servletEnvironment = mock(ServletEnvironment.class);
 
         when(environment.jersey()).thenReturn(jerseyEnvironment);
         when(environment.lifecycle()).thenReturn(lifecycleEnvironment);
         when(environment.healthChecks()).thenReturn(healthCheckRegistry);
         when(environment.admin()).thenReturn(adminEnvironment);
+        when(environment.servlets()).thenReturn(servletEnvironment);
 
         new Platform(application).run(configuration, environment);
 
@@ -137,6 +149,9 @@ public class PlatformTest {
         verify(adminEnvironment).addTask(isA(TestTask.class));
 
         verify(configurator).configure(configuration, environment);
+
+        verify(servletEnvironment).addFilter(eq(filterClass.getSimpleName()), isA(filterClass));
+        verify(servletEnvironment).addFilter(eq(filterName), eq(filter));
     }
 
     @Test
