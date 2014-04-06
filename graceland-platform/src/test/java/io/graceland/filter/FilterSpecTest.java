@@ -10,21 +10,41 @@ import static org.mockito.Mockito.mock;
 
 public class FilterSpecTest {
 
+    private Filter filter = mock(Filter.class);
+
     @Test
     public void has_properties() {
         FilterSpec filterSpec = mock(FilterSpec.class);
 
         Filter filter = filterSpec.getFilter();
-        int prioirty = filterSpec.getPrioirty();
+        int priority = filterSpec.getPriority();
+        String name = filterSpec.getName();
     }
 
     @Test
-    public void builds_correctly() {
-        Filter filter = mock(Filter.class);
-        int priority = 100;
-        FilterSpec filterSpec = new FilterSpec(filter, priority);
+    public void builds_with_defaults() {
+        FilterSpec filterSpec = FilterSpec
+                .forFilter(filter)
+                .build();
 
         assertThat(filterSpec.getFilter(), is(filter));
-        assertThat(filterSpec.getPrioirty(), is(priority));
+        assertThat(filterSpec.getName(), is(filter.getClass().getSimpleName()));
+        assertThat(filterSpec.getPriority(), is(FilterSpec.DEFAULT_PRIORITY));
+    }
+
+    @Test
+    public void builds_with_explicits() {
+        String name = "my-name";
+        int priority = 199;
+
+        FilterSpec filterSpec = FilterSpec
+                .forFilter(filter)
+                .withName(name)
+                .withPriority(priority)
+                .build();
+
+        assertThat(filterSpec.getFilter(), is(filter));
+        assertThat(filterSpec.getName(), is(name));
+        assertThat(filterSpec.getPriority(), is(priority));
     }
 }

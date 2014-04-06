@@ -93,7 +93,11 @@ public class PlatformTest {
         final Class<TestConfigurator> configuratorClass = TestConfigurator.class;
 
         Filter filter = mock(Filter.class);
-        final FilterSpec filterSpec = new FilterSpec(filter, 500);
+        String filterName = "my-filter-name";
+        final FilterSpec filterSpec = FilterSpec
+                .forFilter(filter)
+                .withName(filterName)
+                .build();
 
         Application application = new SimpleApplication() {
             @Override
@@ -148,7 +152,7 @@ public class PlatformTest {
 
         verify(configurator).configure(configuration, environment);
 
-        verify(servletEnvironment).addFilter(anyString(), eq(filter));
+        verify(servletEnvironment).addFilter(eq(filterName), eq(filter));
     }
 
     @Test

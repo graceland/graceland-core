@@ -134,12 +134,9 @@ public class Platform extends io.dropwizard.Application<PlatformConfiguration> {
         }
 
         for (FilterSpec filterSpec : wrapper.getFilters()) {
-            environment.servlets().addFilter(
-                    filterSpec.getFilter().getClass().getSimpleName(),
-                    filterSpec.getFilter());
-
+            environment.servlets().addFilter(filterSpec.getName(), filterSpec.getFilter());
             LOGGER.debug("Registered Filter {}: {}",
-                    filterSpec.getFilter().getClass().getSimpleName(),
+                    filterSpec.getName(),
                     filterSpec.getFilter().getClass().getCanonicalName());
         }
     }
