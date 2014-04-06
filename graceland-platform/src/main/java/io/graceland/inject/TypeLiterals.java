@@ -11,6 +11,7 @@ import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
+import io.graceland.filter.FilterSpec;
 
 /**
  * A utility class that defines helpful classes and static variables. They are used when interacting with Guice's
@@ -96,5 +97,11 @@ public final class TypeLiterals {
     public static TypeLiteral<Set<Configurator>> ConfiguratorSet = new TypeLiteral<Set<Configurator>>() {
     };
     public static TypeLiteral<Set<Class<? extends Configurator>>> ConfiguratorClassSet = new TypeLiteral<Set<Class<? extends Configurator>>>() {
+    };
+
+    // ==========================
+    // Filter Spec Type Literals
+    // ==========================
+    public static TypeLiteral<Set<FilterSpec>> FilterSpecSet = new TypeLiteral<Set<FilterSpec>>() {
     };
 }

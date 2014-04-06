@@ -12,6 +12,7 @@ import io.dropwizard.Bundle;
 import io.dropwizard.cli.Command;
 import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
+import io.graceland.filter.FilterSpec;
 import io.graceland.inject.Keys;
 import io.graceland.testing.TestBundle;
 import io.graceland.testing.TestCommand;
@@ -173,5 +174,23 @@ public class AbstractPluginTest {
         TestConfiguration actualConfiguration = injector.getInstance(Key.get(TestConfiguration.class));
 
         assertThat(actualConfiguration, is(testConfiguration));
+    }
+
+    @Test
+    public void filter_binds_work() {
+        final FilterSpec filterSpec = mock(FilterSpec.class);
+
+
+        Injector injector = Guice.createInjector(new AbstractPlugin() {
+            @Override
+            protected void configure() {
+                bindFilter(filterSpec);
+            }
+        });
+
+        Set<FilterSpec> commandSet = injector.getInstance(Keys.FilterSpecs);
+
+        assertThat(commandSet, hasSize(1));
+        assertThat(commandSet, hasItem(filterSpec));
     }
 }

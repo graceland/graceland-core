@@ -11,6 +11,7 @@ import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
+import io.graceland.filter.FilterSpec;
 
 /**
  * A utility class that defines helpful classes and static variables. They are used when interacting with Guice's
@@ -56,4 +57,7 @@ public final class Keys {
     // Configurators
     public static final Key<Set<Configurator>> Configurators = Key.get(TypeLiterals.ConfiguratorSet, Graceland.class);
     public static final Key<Set<Class<? extends Configurator>>> ConfiguratorClasses = Key.get(TypeLiterals.ConfiguratorClassSet, Graceland.class);
+
+    // Filter Specs
+    public static final Key<Set<FilterSpec>> FilterSpecs = Key.get(TypeLiterals.FilterSpecSet, Graceland.class);
 }
