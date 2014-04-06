@@ -194,6 +194,6 @@ public abstract class AbstractPlugin
     protected FilterBinder buildFilter(Class<? extends Filter> filterClass) {
         Preconditions.checkNotNull(filterClass, "Filter Class cannot be null.");
         buildBinders();
-        return FilterBinder.forClass(binder(), filterClass, binder().getProvider(filterClass));
+        return FilterBinder.forClass(binder(), filterClass);
     }
 }

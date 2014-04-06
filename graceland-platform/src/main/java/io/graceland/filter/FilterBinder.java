@@ -38,10 +38,15 @@ public class FilterBinder {
 
     public static FilterBinder forClass(
             Binder binder,
-            Class<? extends Filter> filterClass,
-            Provider<? extends Filter> provider) {
+            Class<? extends Filter> filterClass) {
 
-        return new FilterBinder(binder, filterClass, provider);
+        Preconditions.checkNotNull(binder, "Binder cannot be null.");
+        Preconditions.checkNotNull(filterClass, "Filter Class cannot be null.");
+
+        return new FilterBinder(
+                binder,
+                filterClass,
+                binder.getProvider(filterClass));
     }
 
     public FilterBinder withPriority(int filterPriority) {
