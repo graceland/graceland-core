@@ -3,6 +3,8 @@ package io.graceland.filter;
 import java.util.Comparator;
 import javax.servlet.Filter;
 
+import com.google.inject.Provider;
+
 public class FilterSpec {
     public static final int DEFAULT_PRIORITY = 500;
     public static final Comparator<FilterSpec> PRIORITY_COMPARATOR = new Comparator<FilterSpec>() {
@@ -12,23 +14,18 @@ public class FilterSpec {
         }
     };
 
-    private final Filter filter;
+    private final Provider<? extends Filter> filterProvider;
     private final int priority;
     private final String name;
 
-
-    FilterSpec(Filter filter, int priority, String name) {
-        this.filter = filter;
+    public FilterSpec(Provider<? extends Filter> filterProvider, int priority, String name) {
+        this.filterProvider = filterProvider;
         this.priority = priority;
         this.name = name;
     }
 
-    public static FilterSpecBuilder forFilter(Filter filter) {
-        return new FilterSpecBuilder(filter);
-    }
-
     public Filter getFilter() {
-        return filter;
+        return filterProvider.get();
     }
 
     public int getPriority() {
@@ -37,33 +34,5 @@ public class FilterSpec {
 
     public String getName() {
         return name;
-    }
-
-    public static class FilterSpecBuilder {
-        private final Filter filter;
-        private int priority = DEFAULT_PRIORITY;
-        private String name = null;
-
-        public FilterSpecBuilder(Filter filter) {
-            this.filter = filter;
-        }
-
-        public FilterSpecBuilder withPriority(int priority) {
-            this.priority = priority;
-            return this;
-        }
-
-        public FilterSpecBuilder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public FilterSpec build() {
-            if (name == null) {
-                name = filter.getClass().getSimpleName();
-            }
-
-            return new FilterSpec(filter, priority, name);
-        }
     }
 }

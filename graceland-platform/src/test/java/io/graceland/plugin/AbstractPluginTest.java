@@ -1,6 +1,7 @@
 package io.graceland.plugin;
 
 import java.util.Set;
+import javax.servlet.Filter;
 
 import org.junit.Test;
 import com.codahale.metrics.health.HealthCheck;
@@ -17,6 +18,7 @@ import io.graceland.inject.Keys;
 import io.graceland.testing.TestBundle;
 import io.graceland.testing.TestCommand;
 import io.graceland.testing.TestConfiguration;
+import io.graceland.testing.TestFilter;
 import io.graceland.testing.TestHealthCheck;
 import io.graceland.testing.TestManaged;
 import io.graceland.testing.TestResource;
@@ -178,19 +180,19 @@ public class AbstractPluginTest {
 
     @Test
     public void filter_binds_work() {
-        final FilterSpec filterSpec = mock(FilterSpec.class);
-
+        final Filter filter = mock(Filter.class);
+        final Class<TestFilter> filterClass = TestFilter.class;
 
         Injector injector = Guice.createInjector(new AbstractPlugin() {
             @Override
             protected void configure() {
-                bindFilter(filterSpec);
+                bindFilter(filter).withPriority(100).bind();
+                bindFilter(filterClass).withName("myName").bind();
             }
         });
 
-        Set<FilterSpec> commandSet = injector.getInstance(Keys.FilterSpecs);
+        Set<FilterSpec> filterSpecSet = injector.getInstance(Keys.FilterSpecs);
 
-        assertThat(commandSet, hasSize(1));
-        assertThat(commandSet, hasItem(filterSpec));
+        assertThat(filterSpecSet, hasSize(2));
     }
 }

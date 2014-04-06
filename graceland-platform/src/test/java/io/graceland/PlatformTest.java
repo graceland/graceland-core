@@ -21,12 +21,12 @@ import io.graceland.application.Application;
 import io.graceland.application.SimpleApplication;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
-import io.graceland.filter.FilterSpec;
 import io.graceland.plugin.AbstractPlugin;
 import io.graceland.plugin.Plugin;
 import io.graceland.testing.TestBundle;
 import io.graceland.testing.TestCommand;
 import io.graceland.testing.TestConfigurator;
+import io.graceland.testing.TestFilter;
 import io.graceland.testing.TestHealthCheck;
 import io.graceland.testing.TestInitializer;
 import io.graceland.testing.TestManaged;
@@ -92,19 +92,9 @@ public class PlatformTest {
         final Configurator configurator = mock(Configurator.class);
         final Class<TestConfigurator> configuratorClass = TestConfigurator.class;
 
-        Filter filter1 = mock(Filter.class);
-        String filterName = "my-filter-name";
-        final FilterSpec filterSpec = FilterSpec
-                .forFilter(filter1)
-                .withName(filterName)
-                .withPriority(100)
-                .build();
-
-        Filter filter2 = mock(Filter.class);
-        final FilterSpec filterSpec2 = FilterSpec
-                .forFilter(filter2)
-                .withPriority(-100)
-                .build();
+        final String filterName = "my-filter-name";
+        final Filter filter = mock(Filter.class);
+        final Class<TestFilter> filterClass = TestFilter.class;
 
         Application application = new SimpleApplication() {
             @Override
@@ -122,8 +112,8 @@ public class PlatformTest {
                         bindTask(taskClass);
                         bindConfigurator(configurator);
                         bindConfigurator(configuratorClass);
-                        bindFilter(filterSpec);
-                        bindFilter(filterSpec2);
+                        bindFilter(filter).withName(filterName).withPriority(999).bind();
+                        bindFilter(filterClass).withPriority(0).bind();
                     }
                 });
             }
@@ -160,8 +150,8 @@ public class PlatformTest {
 
         verify(configurator).configure(configuration, environment);
 
-        verify(servletEnvironment).addFilter(anyString(), eq(filter2));
-        verify(servletEnvironment).addFilter(eq(filterName), eq(filter1));
+        verify(servletEnvironment).addFilter(eq(filterClass.getSimpleName()), isA(filterClass));
+        verify(servletEnvironment).addFilter(eq(filterName), eq(filter));
     }
 
     @Test
