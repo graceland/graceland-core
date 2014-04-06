@@ -1,9 +1,16 @@
 package io.graceland.filter;
 
+import java.util.Comparator;
 import javax.servlet.Filter;
 
 public class FilterSpec {
     public static final int DEFAULT_PRIORITY = 500;
+    public static final Comparator<FilterSpec> PRIORITY_COMPARATOR = new Comparator<FilterSpec>() {
+        @Override
+        public int compare(FilterSpec o1, FilterSpec o2) {
+            return o1.getPriority() - o2.getPriority();
+        }
+    };
 
     private final Filter filter;
     private final int priority;

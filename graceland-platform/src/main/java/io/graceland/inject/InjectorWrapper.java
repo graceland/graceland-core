@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.codahale.metrics.health.HealthCheck;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableSet;
 import com.google.inject.ConfigurationException;
@@ -130,7 +131,9 @@ public class InjectorWrapper {
         return getAndBuildInstances(Keys.Configurators, Keys.ConfiguratorClasses);
     }
 
-    public ImmutableList<FilterSpec> getFilters() {
-        return ImmutableList.copyOf(getSetSafely(Keys.FilterSpecs));
+    public ImmutableList<FilterSpec> getFilterSpecs() {
+        return FluentIterable
+                .from(getSetSafely(Keys.FilterSpecs))
+                .toSortedList(FilterSpec.PRIORITY_COMPARATOR);
     }
 }

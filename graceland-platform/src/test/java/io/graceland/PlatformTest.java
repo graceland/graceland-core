@@ -92,11 +92,18 @@ public class PlatformTest {
         final Configurator configurator = mock(Configurator.class);
         final Class<TestConfigurator> configuratorClass = TestConfigurator.class;
 
-        Filter filter = mock(Filter.class);
+        Filter filter1 = mock(Filter.class);
         String filterName = "my-filter-name";
         final FilterSpec filterSpec = FilterSpec
-                .forFilter(filter)
+                .forFilter(filter1)
                 .withName(filterName)
+                .withPriority(100)
+                .build();
+
+        Filter filter2 = mock(Filter.class);
+        final FilterSpec filterSpec2 = FilterSpec
+                .forFilter(filter2)
+                .withPriority(-100)
                 .build();
 
         Application application = new SimpleApplication() {
@@ -116,6 +123,7 @@ public class PlatformTest {
                         bindConfigurator(configurator);
                         bindConfigurator(configuratorClass);
                         bindFilter(filterSpec);
+                        bindFilter(filterSpec2);
                     }
                 });
             }
@@ -152,7 +160,8 @@ public class PlatformTest {
 
         verify(configurator).configure(configuration, environment);
 
-        verify(servletEnvironment).addFilter(eq(filterName), eq(filter));
+        verify(servletEnvironment).addFilter(anyString(), eq(filter2));
+        verify(servletEnvironment).addFilter(eq(filterName), eq(filter1));
     }
 
     @Test

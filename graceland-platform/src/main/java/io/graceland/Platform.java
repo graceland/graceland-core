@@ -133,7 +133,7 @@ public class Platform extends io.dropwizard.Application<PlatformConfiguration> {
             LOGGER.debug("Registered Task: {}", task.getClass().getCanonicalName());
         }
 
-        for (FilterSpec filterSpec : wrapper.getFilters()) {
+        for (FilterSpec filterSpec : wrapper.getFilterSpecs()) {
             environment.servlets().addFilter(filterSpec.getName(), filterSpec.getFilter());
             LOGGER.debug("Registered Filter {}: {}",
                     filterSpec.getName(),

@@ -1,5 +1,7 @@
 package io.graceland.inject;
 
+import javax.servlet.Filter;
+
 import org.junit.Test;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -12,6 +14,7 @@ import io.graceland.testing.TestHealthCheck;
 import io.graceland.testing.TestManaged;
 import io.graceland.testing.TestTask;
 
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -80,6 +83,28 @@ public class InjectorWrapperTest {
         assertThat(wrapper.getManaged().size(), is(2));
         assertThat(wrapper.getBundles().size(), is(2));
         assertThat(wrapper.getCommands().size(), is(2));
-        assertThat(wrapper.getFilters().size(), is(1));
+        assertThat(wrapper.getFilterSpecs().size(), is(1));
+    }
+
+    @Test
+    public void returns_filters_in_priority_order() {
+        final FilterSpec filterSpec1 = FilterSpec.forFilter(mock(Filter.class)).withPriority(-10).build();
+        final FilterSpec filterSpec2 = FilterSpec.forFilter(mock(Filter.class)).withPriority(0).build();
+        final FilterSpec filterSpec3 = FilterSpec.forFilter(mock(Filter.class)).withPriority(100).build();
+
+        Injector injector = Guice.createInjector(
+                new AbstractPlugin() {
+                    @Override
+                    protected void configure() {
+                        bindFilter(filterSpec2);
+                        bindFilter(filterSpec1);
+                        bindFilter(filterSpec3);
+                    }
+                }
+        );
+
+        InjectorWrapper wrapper = InjectorWrapper.wrap(injector);
+
+        assertThat(wrapper.getFilterSpecs(), contains(filterSpec1, filterSpec2, filterSpec3));
     }
 }
