@@ -2,6 +2,8 @@ package io.graceland.filter;
 
 import javax.servlet.Filter;
 
+import com.google.common.base.Optional;
+import com.google.common.base.Preconditions;
 import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.multibindings.Multibinder;
@@ -9,26 +11,28 @@ import com.google.inject.multibindings.Multibinder;
 import io.graceland.inject.Graceland;
 
 public class FilterBinder {
-    private final Provider<? extends Filter> filterProvider;
+    public static final int DEFAULT_PRIORITY = 500;
+
     private final Binder binder;
     private final Class<? extends Filter> filterClass;
+    private final Provider<? extends Filter> filterProvider;
 
-    // TODO: move from FilterSpec to this class
-    private int priority = FilterSpec.DEFAULT_PRIORITY;
-    // TODO: change this to an optional
-    private String name = null;
+    private int priority = DEFAULT_PRIORITY;
+    private Optional<String> name = Optional.absent();
 
     FilterBinder(
             Binder binder,
             Class<? extends Filter> filterClass,
             Provider<? extends Filter> filterProvider) {
 
-        this.binder = binder;
-        this.filterClass = filterClass;
-        this.filterProvider = filterProvider;
+        this.binder = Preconditions.checkNotNull(binder, "Binder cannot be null.");
+        this.filterClass = Preconditions.checkNotNull(filterClass, "Filter Class cannot be null.");
+        this.filterProvider = Preconditions.checkNotNull(filterProvider, "Filter Provider cannot be null.");
     }
 
     public static FilterBinder forInstance(Binder binder, Filter filter) {
+        Preconditions.checkNotNull(filter, "Filter cannot be null.");
+
         return new FilterBinder(binder, filter.getClass(), new FilterProvider(filter));
     }
 
@@ -46,17 +50,15 @@ public class FilterBinder {
     }
 
     public FilterBinder withName(String filterName) {
-        this.name = filterName;
+        this.name = Optional.fromNullable(filterName);
         return this;
     }
 
     public void bind() {
-        if (name == null) {
-            // name = filter.getClass().getSimpleName();
-            name = filterClass.getSimpleName();
-        }
-
-        FilterSpec fitlerSpec = new FilterSpec(filterProvider, priority, name);
+        FilterSpec fitlerSpec = new FilterSpec(
+                filterProvider,
+                priority,
+                name.or(filterClass.getSimpleName()));
 
         Multibinder
                 .newSetBinder(binder, FilterSpec.class, Graceland.class)

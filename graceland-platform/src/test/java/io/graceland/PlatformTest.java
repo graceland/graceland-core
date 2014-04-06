@@ -112,8 +112,8 @@ public class PlatformTest {
                         bindTask(taskClass);
                         bindConfigurator(configurator);
                         bindConfigurator(configuratorClass);
-                        bindFilter(filter).withName(filterName).withPriority(999).bind();
-                        bindFilter(filterClass).withPriority(0).bind();
+                        buildFilter(filter).withName(filterName).withPriority(999).bind();
+                        buildFilter(filterClass).withPriority(0).bind();
                     }
                 });
             }

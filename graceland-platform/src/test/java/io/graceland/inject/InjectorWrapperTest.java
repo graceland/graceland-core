@@ -71,8 +71,8 @@ public class InjectorWrapperTest {
                         bindCommand(new TestCommand());
                         bindCommand(TestCommand.class);
 
-                        bindFilter(new TestFilter()).bind();
-                        bindFilter(TestFilter.class).bind();
+                        buildFilter(new TestFilter()).bind();
+                        buildFilter(TestFilter.class).bind();
                     }
                 }
         );
@@ -98,9 +98,9 @@ public class InjectorWrapperTest {
                 new AbstractPlugin() {
                     @Override
                     protected void configure() {
-                        bindFilter(filter2).withPriority(0).bind();
-                        bindFilter(filter1).withPriority(-10).bind();
-                        bindFilter(filter3).withPriority(100).bind();
+                        buildFilter(filter2).withPriority(0).bind();
+                        buildFilter(filter1).withPriority(-10).bind();
+                        buildFilter(filter3).withPriority(100).bind();
                     }
                 }
         );

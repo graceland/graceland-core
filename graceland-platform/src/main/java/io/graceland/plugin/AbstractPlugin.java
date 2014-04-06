@@ -16,7 +16,6 @@ import io.graceland.configuration.ConfigurationBinder;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
 import io.graceland.filter.FilterBinder;
-import io.graceland.filter.FilterSpec;
 import io.graceland.inject.Graceland;
 import io.graceland.inject.TypeLiterals;
 
@@ -52,8 +51,6 @@ public abstract class AbstractPlugin
     private Multibinder<Configurator> configuratorBinder = null;
     private Multibinder<Class<? extends Configurator>> configuratorClassBinder = null;
 
-    private Multibinder<FilterSpec> filterSpecBinder = null;
-
     private boolean bindersBuilt = false;
 
     private void buildBinders() {
@@ -73,7 +70,6 @@ public abstract class AbstractPlugin
             initializerClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.InitializerClass, Graceland.class);
             configuratorBinder = Multibinder.newSetBinder(binder(), Configurator.class, Graceland.class);
             configuratorClassBinder = Multibinder.newSetBinder(binder(), TypeLiterals.ConfiguratorClass, Graceland.class);
-            filterSpecBinder = Multibinder.newSetBinder(binder(), FilterSpec.class, Graceland.class);
 
             bindersBuilt = true;
         }
@@ -189,13 +185,13 @@ public abstract class AbstractPlugin
         return ConfigurationBinder.forClass(configurationClass, binder());
     }
 
-    protected FilterBinder bindFilter(Filter filter) {
+    protected FilterBinder buildFilter(Filter filter) {
         Preconditions.checkNotNull(filter, "Filter cannot be null.");
         buildBinders();
         return FilterBinder.forInstance(binder(), filter);
     }
 
-    protected FilterBinder bindFilter(Class<? extends Filter> filterClass) {
+    protected FilterBinder buildFilter(Class<? extends Filter> filterClass) {
         Preconditions.checkNotNull(filterClass, "Filter Class cannot be null.");
         buildBinders();
         return FilterBinder.forClass(binder(), filterClass, binder().getProvider(filterClass));

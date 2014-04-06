@@ -186,8 +186,8 @@ public class AbstractPluginTest {
         Injector injector = Guice.createInjector(new AbstractPlugin() {
             @Override
             protected void configure() {
-                bindFilter(filter).withPriority(100).bind();
-                bindFilter(filterClass).withName("myName").bind();
+                buildFilter(filter).withPriority(100).bind();
+                buildFilter(filterClass).withName("myName").bind();
             }
         });
 
