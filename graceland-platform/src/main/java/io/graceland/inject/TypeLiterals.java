@@ -26,82 +26,82 @@ public final class TypeLiterals {
     // ==============================
     // Jersey Component Type Literals
     // ==============================
-    public static TypeLiteral<Set<Object>> ObjectSet = new TypeLiteral<Set<Object>>() {
+    public static final TypeLiteral<Set<Object>> ObjectSet = new TypeLiteral<Set<Object>>() {
     };
 
     // ==========================
     // Health Check Type Literals
     // ==========================
-    public static TypeLiteral<Class<? extends HealthCheck>> HealthCheckClass = new TypeLiteral<Class<? extends HealthCheck>>() {
+    public static final TypeLiteral<Class<? extends HealthCheck>> HealthCheckClass = new TypeLiteral<Class<? extends HealthCheck>>() {
     };
-    public static TypeLiteral<Set<HealthCheck>> HealthCheckSet = new TypeLiteral<Set<HealthCheck>>() {
+    public static final TypeLiteral<Set<HealthCheck>> HealthCheckSet = new TypeLiteral<Set<HealthCheck>>() {
     };
-    public static TypeLiteral<Set<Class<? extends HealthCheck>>> HealthCheckClassSet = new TypeLiteral<Set<Class<? extends HealthCheck>>>() {
+    public static final TypeLiteral<Set<Class<? extends HealthCheck>>> HealthCheckClassSet = new TypeLiteral<Set<Class<? extends HealthCheck>>>() {
     };
 
     // =====================
     // Managed Type Literals
     // =====================
-    public static TypeLiteral<Class<? extends Managed>> ManagedClass = new TypeLiteral<Class<? extends Managed>>() {
+    public static final TypeLiteral<Class<? extends Managed>> ManagedClass = new TypeLiteral<Class<? extends Managed>>() {
     };
-    public static TypeLiteral<Set<Managed>> ManagedSet = new TypeLiteral<Set<Managed>>() {
+    public static final TypeLiteral<Set<Managed>> ManagedSet = new TypeLiteral<Set<Managed>>() {
     };
-    public static TypeLiteral<Set<Class<? extends Managed>>> ManagedClassSet = new TypeLiteral<Set<Class<? extends Managed>>>() {
+    public static final TypeLiteral<Set<Class<? extends Managed>>> ManagedClassSet = new TypeLiteral<Set<Class<? extends Managed>>>() {
     };
 
     // ==================
     // Task Type Literals
     // ==================
-    public static TypeLiteral<Class<? extends Task>> TaskClass = new TypeLiteral<Class<? extends Task>>() {
+    public static final TypeLiteral<Class<? extends Task>> TaskClass = new TypeLiteral<Class<? extends Task>>() {
     };
-    public static TypeLiteral<Set<Task>> TaskSet = new TypeLiteral<Set<Task>>() {
+    public static final TypeLiteral<Set<Task>> TaskSet = new TypeLiteral<Set<Task>>() {
     };
-    public static TypeLiteral<Set<Class<? extends Task>>> TaskClassSet = new TypeLiteral<Set<Class<? extends Task>>>() {
+    public static final TypeLiteral<Set<Class<? extends Task>>> TaskClassSet = new TypeLiteral<Set<Class<? extends Task>>>() {
     };
 
     // ====================
     // Bundle Type Literals
     // ====================
-    public static TypeLiteral<Class<? extends Bundle>> BundleClass = new TypeLiteral<Class<? extends Bundle>>() {
+    public static final TypeLiteral<Class<? extends Bundle>> BundleClass = new TypeLiteral<Class<? extends Bundle>>() {
     };
-    public static TypeLiteral<Set<Bundle>> BundleSet = new TypeLiteral<Set<Bundle>>() {
+    public static final TypeLiteral<Set<Bundle>> BundleSet = new TypeLiteral<Set<Bundle>>() {
     };
-    public static TypeLiteral<Set<Class<? extends Bundle>>> BundleClassSet = new TypeLiteral<Set<Class<? extends Bundle>>>() {
+    public static final TypeLiteral<Set<Class<? extends Bundle>>> BundleClassSet = new TypeLiteral<Set<Class<? extends Bundle>>>() {
     };
 
     // =====================
     // Command Type Literals
     // =====================
-    public static TypeLiteral<Class<? extends Command>> CommandClass = new TypeLiteral<Class<? extends Command>>() {
+    public static final TypeLiteral<Class<? extends Command>> CommandClass = new TypeLiteral<Class<? extends Command>>() {
     };
-    public static TypeLiteral<Set<Command>> CommandSet = new TypeLiteral<Set<Command>>() {
+    public static final TypeLiteral<Set<Command>> CommandSet = new TypeLiteral<Set<Command>>() {
     };
-    public static TypeLiteral<Set<Class<? extends Command>>> CommandClassSet = new TypeLiteral<Set<Class<? extends Command>>>() {
+    public static final TypeLiteral<Set<Class<? extends Command>>> CommandClassSet = new TypeLiteral<Set<Class<? extends Command>>>() {
     };
 
     // =========================
     // Initializer Type Literals
     // =========================
-    public static TypeLiteral<Class<? extends Initializer>> InitializerClass = new TypeLiteral<Class<? extends Initializer>>() {
+    public static final TypeLiteral<Class<? extends Initializer>> InitializerClass = new TypeLiteral<Class<? extends Initializer>>() {
     };
-    public static TypeLiteral<Set<Initializer>> InitializerSet = new TypeLiteral<Set<Initializer>>() {
+    public static final TypeLiteral<Set<Initializer>> InitializerSet = new TypeLiteral<Set<Initializer>>() {
     };
-    public static TypeLiteral<Set<Class<? extends Initializer>>> InitializerClassSet = new TypeLiteral<Set<Class<? extends Initializer>>>() {
+    public static final TypeLiteral<Set<Class<? extends Initializer>>> InitializerClassSet = new TypeLiteral<Set<Class<? extends Initializer>>>() {
     };
 
     // ==========================
     // Configurator Type Literals
     // ==========================
-    public static TypeLiteral<Class<? extends Configurator>> ConfiguratorClass = new TypeLiteral<Class<? extends Configurator>>() {
+    public static final TypeLiteral<Class<? extends Configurator>> ConfiguratorClass = new TypeLiteral<Class<? extends Configurator>>() {
     };
-    public static TypeLiteral<Set<Configurator>> ConfiguratorSet = new TypeLiteral<Set<Configurator>>() {
+    public static final TypeLiteral<Set<Configurator>> ConfiguratorSet = new TypeLiteral<Set<Configurator>>() {
     };
-    public static TypeLiteral<Set<Class<? extends Configurator>>> ConfiguratorClassSet = new TypeLiteral<Set<Class<? extends Configurator>>>() {
+    public static final TypeLiteral<Set<Class<? extends Configurator>>> ConfiguratorClassSet = new TypeLiteral<Set<Class<? extends Configurator>>>() {
     };
 
     // ==========================
     // Filter Spec Type Literals
     // ==========================
-    public static TypeLiteral<Set<FilterSpec>> FilterSpecSet = new TypeLiteral<Set<FilterSpec>>() {
+    public static final TypeLiteral<Set<FilterSpec>> FilterSpecSet = new TypeLiteral<Set<FilterSpec>>() {
     };
 }
