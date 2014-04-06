@@ -16,7 +16,7 @@
     </modules>
 
     <properties>
-        <dropwizard.version>0.7.0-SNAPSHOT</dropwizard.version>
+        <dropwizard.version>0.7.0</dropwizard.version>
         <guice.version>4.0-beta</guice.version>
         <shiro.version>1.2.2</shiro.version>
         <guava.version>15.0</guava.version>
@@ -75,14 +75,6 @@
             </plugin>
         </plugins>
     </build>
-
-
-    <repositories>
-        <repository>
-            <id>Sonatype Snapshots</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-        </repository>
-    </repositories>
 
     <dependencyManagement>
         <dependencies>
