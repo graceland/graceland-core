@@ -2,29 +2,69 @@
 Escape Hatches
 ##############
 
-.. rubric:: Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-            incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-            exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
-            dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-            mollit anim id est laborum.
+.. rubric:: Graceland is built on top of the dropwizard platform and tries to wrap up the
+            functionality so your plugins don't need to deal directly with it. Because we can't
+            begin to pretend that we'll cover all of your use cases, we've provided some escape
+            hatches so you could access the low-level dropwizard functionality when needed.
+
+
+How We Use Dropwizard
+=====================
+
+A dropwizard application has two primary phases: ``initialize`` and ``run``. Graceland provides
+access to the dropwizard components in each of those phases.
+
+.. code-block:: java
+
+    public class Platform extends io.dropwizard.Application<PlatformConfiguration> {
+        @Override
+        public void initialize(Bootstrap<PlatformConfiguration> bootstrap) {
+            // run the Initializers and other code
+        }
+
+        @Override
+        public void run(PlatformConfiguration configuration, Environment environment) throws Exception {
+            // run the Configurators and other code
+        }
+    }
 
 
 Configurator
 ============
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-in culpa qui officia deserunt mollit anim id est laborum.
+Configurators are triggered during the ``run`` phase of the dropwizard application. It provides
+access to two important low level components:
+
+- ``configuration`` - the application's configuration.
+- ``environment`` - an ``io.dropwizard.setup.Environment``, which provides access to the underlying
+  frameworks, such as jetty, jersey, and the metrics registry.
+
+Most of the work done in a dropwizard application is done during the ``run`` phase, so the majority
+of the custom code will come in the form of a ``Configurator``.
+
+.. code-block:: java
+
+    public class SampleConfigurator implements Configurator {
+        @Override
+        public void configure(PlatformConfiguration configuration, Environment environment) {
+            // example of adding a filter directly to the environment
+            environment.servlets().addFilter(...)
+        }
+    }
 
 
 Initializer
 ===========
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-in culpa qui officia deserunt mollit anim id est laborum.
+If you need access to the a ``io.dropwizard.setup.Bootstrap``, you can use an ``Initializer``.
+This phase is usually used to add commands and bundles to a dropwizard applicataion.
+
+.. code-block:: java
+
+    public class SampleInitializer implements Initializer {
+        @Override
+        public void initialize(Bootstrap<PlatformConfiguration> bootstrap) {
+            // add a configured command
+            bootstrap.addCommand(...);
+        }
+    }
