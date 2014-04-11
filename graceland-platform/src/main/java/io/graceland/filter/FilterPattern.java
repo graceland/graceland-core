@@ -6,6 +6,25 @@ import javax.servlet.DispatcherType;
 import com.google.common.collect.ImmutableList;
 
 public class FilterPattern {
+    private final EnumSet<DispatcherType> dispatcherTypes;
+    private final boolean matchAfter;
+    private final ImmutableList<String> urlPatterns;
+
     public FilterPattern(EnumSet<DispatcherType> dispatcherTypes, boolean matchAfter, ImmutableList<String> urlPatterns) {
+        this.dispatcherTypes = dispatcherTypes;
+        this.matchAfter = matchAfter;
+        this.urlPatterns = urlPatterns;
+    }
+
+    public EnumSet<DispatcherType> getDispatcherTypes() {
+        return dispatcherTypes;
+    }
+
+    public boolean isMatchAfter() {
+        return matchAfter;
+    }
+
+    public ImmutableList<String> getUrlPatterns() {
+        return urlPatterns;
     }
 }

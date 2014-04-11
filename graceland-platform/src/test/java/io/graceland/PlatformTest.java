@@ -38,6 +38,7 @@ import io.graceland.testing.TestManaged;
 import io.graceland.testing.TestResource;
 import io.graceland.testing.TestTask;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
@@ -221,7 +222,7 @@ public class PlatformTest {
         final FilterPattern filterPattern = new FilterPattern(dispatcherTypes, true, urlPatterns);
 
         FilterRegistration.Dynamic filterDynamic = mock(FilterRegistration.Dynamic.class);
-        when(servletEnvironment.addFilter(anyString(), eq(patternedFilter))).thenReturn(filterDynamic);
+        when(servletEnvironment.addFilter(anyString(), any(TestFilter.class))).thenReturn(filterDynamic);
 
         Application application = buildApplication(
                 new AbstractPlugin() {
