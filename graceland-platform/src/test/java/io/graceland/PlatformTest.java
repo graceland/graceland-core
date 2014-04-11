@@ -2,6 +2,7 @@ package io.graceland;
 
 import javax.servlet.Filter;
 
+import org.junit.Before;
 import org.junit.Test;
 import com.codahale.metrics.health.HealthCheck;
 import com.codahale.metrics.health.HealthCheckRegistry;
@@ -41,6 +42,25 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class PlatformTest {
+
+    private PlatformConfiguration configuration = mock(PlatformConfiguration.class);
+    private Bootstrap<PlatformConfiguration> bootstrap = mock(Bootstrap.class);
+
+    private Environment environment = mock(Environment.class);
+    private LifecycleEnvironment lifecycleEnvironment = mock(LifecycleEnvironment.class);
+    private JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
+    private HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
+    private AdminEnvironment adminEnvironment = mock(AdminEnvironment.class);
+    private ServletEnvironment servletEnvironment = mock(ServletEnvironment.class);
+
+    @Before
+    public void before() {
+        when(environment.jersey()).thenReturn(jerseyEnvironment);
+        when(environment.lifecycle()).thenReturn(lifecycleEnvironment);
+        when(environment.healthChecks()).thenReturn(healthCheckRegistry);
+        when(environment.admin()).thenReturn(adminEnvironment);
+        when(environment.servlets()).thenReturn(servletEnvironment);
+    }
 
     protected Platform newPlatform(Application application) {
         return new Platform(application);
@@ -84,33 +104,15 @@ public class PlatformTest {
         final Object jerseyComponent = new Object();
         final Class<TestResource> jerseyComponentClass = TestResource.class;
 
-        Application application = new SimpleApplication() {
-            @Override
-            protected void configure() {
-                loadPlugin(new AbstractPlugin() {
+        Application application = buildApplication(
+                new AbstractPlugin() {
                     @Override
                     protected void configure() {
                         bindJerseyComponent(jerseyComponent);
                         bindJerseyComponent(jerseyComponentClass);
                     }
-                });
-            }
-        };
-
-        PlatformConfiguration configuration = mock(PlatformConfiguration.class);
-
-        Environment environment = mock(Environment.class);
-        LifecycleEnvironment lifecycleEnvironment = mock(LifecycleEnvironment.class);
-        JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
-        HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
-        AdminEnvironment adminEnvironment = mock(AdminEnvironment.class);
-        ServletEnvironment servletEnvironment = mock(ServletEnvironment.class);
-
-        when(environment.jersey()).thenReturn(jerseyEnvironment);
-        when(environment.lifecycle()).thenReturn(lifecycleEnvironment);
-        when(environment.healthChecks()).thenReturn(healthCheckRegistry);
-        when(environment.admin()).thenReturn(adminEnvironment);
-        when(environment.servlets()).thenReturn(servletEnvironment);
+                }
+        );
 
         new Platform(application).run(configuration, environment);
 
@@ -123,33 +125,15 @@ public class PlatformTest {
         final Managed managed = mock(Managed.class);
         final Class<TestManaged> managedClass = TestManaged.class;
 
-        Application application = new SimpleApplication() {
-            @Override
-            protected void configure() {
-                loadPlugin(new AbstractPlugin() {
+        Application application = buildApplication(
+                new AbstractPlugin() {
                     @Override
                     protected void configure() {
                         bindManaged(managed);
                         bindManaged(managedClass);
                     }
-                });
-            }
-        };
-
-        PlatformConfiguration configuration = mock(PlatformConfiguration.class);
-
-        Environment environment = mock(Environment.class);
-        LifecycleEnvironment lifecycleEnvironment = mock(LifecycleEnvironment.class);
-        JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
-        HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
-        AdminEnvironment adminEnvironment = mock(AdminEnvironment.class);
-        ServletEnvironment servletEnvironment = mock(ServletEnvironment.class);
-
-        when(environment.jersey()).thenReturn(jerseyEnvironment);
-        when(environment.lifecycle()).thenReturn(lifecycleEnvironment);
-        when(environment.healthChecks()).thenReturn(healthCheckRegistry);
-        when(environment.admin()).thenReturn(adminEnvironment);
-        when(environment.servlets()).thenReturn(servletEnvironment);
+                }
+        );
 
         new Platform(application).run(configuration, environment);
 
@@ -162,33 +146,15 @@ public class PlatformTest {
         final HealthCheck healthCheck = mock(HealthCheck.class);
         final Class<TestHealthCheck> healthCheckClass = TestHealthCheck.class;
 
-        Application application = new SimpleApplication() {
-            @Override
-            protected void configure() {
-                loadPlugin(new AbstractPlugin() {
+        Application application = buildApplication(
+                new AbstractPlugin() {
                     @Override
                     protected void configure() {
                         bindHealthCheck(healthCheck);
                         bindHealthCheck(healthCheckClass);
                     }
-                });
-            }
-        };
-
-        PlatformConfiguration configuration = mock(PlatformConfiguration.class);
-
-        Environment environment = mock(Environment.class);
-        LifecycleEnvironment lifecycleEnvironment = mock(LifecycleEnvironment.class);
-        JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
-        HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
-        AdminEnvironment adminEnvironment = mock(AdminEnvironment.class);
-        ServletEnvironment servletEnvironment = mock(ServletEnvironment.class);
-
-        when(environment.jersey()).thenReturn(jerseyEnvironment);
-        when(environment.lifecycle()).thenReturn(lifecycleEnvironment);
-        when(environment.healthChecks()).thenReturn(healthCheckRegistry);
-        when(environment.admin()).thenReturn(adminEnvironment);
-        when(environment.servlets()).thenReturn(servletEnvironment);
+                }
+        );
 
         new Platform(application).run(configuration, environment);
 
@@ -201,33 +167,15 @@ public class PlatformTest {
         final Task task = mock(Task.class);
         final Class<TestTask> taskClass = TestTask.class;
 
-        Application application = new SimpleApplication() {
-            @Override
-            protected void configure() {
-                loadPlugin(new AbstractPlugin() {
+        Application application = buildApplication(
+                new AbstractPlugin() {
                     @Override
                     protected void configure() {
                         bindTask(task);
                         bindTask(taskClass);
                     }
-                });
-            }
-        };
-
-        PlatformConfiguration configuration = mock(PlatformConfiguration.class);
-
-        Environment environment = mock(Environment.class);
-        LifecycleEnvironment lifecycleEnvironment = mock(LifecycleEnvironment.class);
-        JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
-        HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
-        AdminEnvironment adminEnvironment = mock(AdminEnvironment.class);
-        ServletEnvironment servletEnvironment = mock(ServletEnvironment.class);
-
-        when(environment.jersey()).thenReturn(jerseyEnvironment);
-        when(environment.lifecycle()).thenReturn(lifecycleEnvironment);
-        when(environment.healthChecks()).thenReturn(healthCheckRegistry);
-        when(environment.admin()).thenReturn(adminEnvironment);
-        when(environment.servlets()).thenReturn(servletEnvironment);
+                }
+        );
 
         new Platform(application).run(configuration, environment);
 
@@ -240,33 +188,15 @@ public class PlatformTest {
         final Configurator configurator = mock(Configurator.class);
         final Class<TestConfigurator> configuratorClass = TestConfigurator.class;
 
-        Application application = new SimpleApplication() {
-            @Override
-            protected void configure() {
-                loadPlugin(new AbstractPlugin() {
+        Application application = buildApplication(
+                new AbstractPlugin() {
                     @Override
                     protected void configure() {
                         bindConfigurator(configurator);
                         bindConfigurator(configuratorClass);
                     }
-                });
-            }
-        };
-
-        PlatformConfiguration configuration = mock(PlatformConfiguration.class);
-
-        Environment environment = mock(Environment.class);
-        LifecycleEnvironment lifecycleEnvironment = mock(LifecycleEnvironment.class);
-        JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
-        HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
-        AdminEnvironment adminEnvironment = mock(AdminEnvironment.class);
-        ServletEnvironment servletEnvironment = mock(ServletEnvironment.class);
-
-        when(environment.jersey()).thenReturn(jerseyEnvironment);
-        when(environment.lifecycle()).thenReturn(lifecycleEnvironment);
-        when(environment.healthChecks()).thenReturn(healthCheckRegistry);
-        when(environment.admin()).thenReturn(adminEnvironment);
-        when(environment.servlets()).thenReturn(servletEnvironment);
+                }
+        );
 
         new Platform(application).run(configuration, environment);
 
@@ -280,33 +210,15 @@ public class PlatformTest {
         final Filter filter = mock(Filter.class);
         final Class<TestFilter> filterClass = TestFilter.class;
 
-        Application application = new SimpleApplication() {
-            @Override
-            protected void configure() {
-                loadPlugin(new AbstractPlugin() {
+        Application application = buildApplication(
+                new AbstractPlugin() {
                     @Override
                     protected void configure() {
                         buildFilter(filter).withName(filterName).withPriority(999).bind();
                         buildFilter(filterClass).withPriority(0).bind();
                     }
-                });
-            }
-        };
-
-        PlatformConfiguration configuration = mock(PlatformConfiguration.class);
-
-        Environment environment = mock(Environment.class);
-        LifecycleEnvironment lifecycleEnvironment = mock(LifecycleEnvironment.class);
-        JerseyEnvironment jerseyEnvironment = mock(JerseyEnvironment.class);
-        HealthCheckRegistry healthCheckRegistry = mock(HealthCheckRegistry.class);
-        AdminEnvironment adminEnvironment = mock(AdminEnvironment.class);
-        ServletEnvironment servletEnvironment = mock(ServletEnvironment.class);
-
-        when(environment.jersey()).thenReturn(jerseyEnvironment);
-        when(environment.lifecycle()).thenReturn(lifecycleEnvironment);
-        when(environment.healthChecks()).thenReturn(healthCheckRegistry);
-        when(environment.admin()).thenReturn(adminEnvironment);
-        when(environment.servlets()).thenReturn(servletEnvironment);
+                }
+        );
 
         new Platform(application).run(configuration, environment);
 
@@ -319,20 +231,15 @@ public class PlatformTest {
         final Bundle bundle = mock(Bundle.class);
         final Class<TestBundle> bundleClass = TestBundle.class;
 
-        Application application = new SimpleApplication() {
-            @Override
-            protected void configure() {
-                loadPlugin(new AbstractPlugin() {
+        Application application = buildApplication(
+                new AbstractPlugin() {
                     @Override
                     protected void configure() {
                         bindBundle(bundle);
                         bindBundle(bundleClass);
                     }
-                });
-            }
-        };
-
-        Bootstrap<PlatformConfiguration> bootstrap = mock(Bootstrap.class);
+                }
+        );
 
         new Platform(application).initialize(bootstrap);
 
@@ -345,20 +252,15 @@ public class PlatformTest {
         final Command command = mock(Command.class);
         final Class<TestCommand> commandClass = TestCommand.class;
 
-        Application application = new SimpleApplication() {
-            @Override
-            protected void configure() {
-                loadPlugin(new AbstractPlugin() {
+        Application application = buildApplication(
+                new AbstractPlugin() {
                     @Override
                     protected void configure() {
                         bindCommand(command);
                         bindCommand(commandClass);
                     }
-                });
-            }
-        };
-
-        Bootstrap<PlatformConfiguration> bootstrap = mock(Bootstrap.class);
+                }
+        );
 
         new Platform(application).initialize(bootstrap);
 
@@ -371,24 +273,28 @@ public class PlatformTest {
         final Initializer initializer = mock(Initializer.class);
         final Class<TestInitializer> initializerClass = TestInitializer.class;
 
-        Application application = new SimpleApplication() {
-            @Override
-            protected void configure() {
-                loadPlugin(new AbstractPlugin() {
+        Application application = buildApplication(
+                new AbstractPlugin() {
                     @Override
                     protected void configure() {
                         bindInitializer(initializer);
                         bindInitializer(initializerClass);
                     }
-                });
-            }
-        };
-
-        Bootstrap<PlatformConfiguration> bootstrap = mock(Bootstrap.class);
+                }
+        );
 
         new Platform(application).initialize(bootstrap);
 
         // TODO: Add a verification for the class-generated Initializer
         verify(initializer).initialize(eq(bootstrap));
+    }
+
+    private Application buildApplication(final Plugin plugin) {
+        return new SimpleApplication() {
+            @Override
+            protected void configure() {
+                loadPlugin(plugin);
+            }
+        };
     }
 }
