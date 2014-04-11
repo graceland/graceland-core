@@ -315,13 +315,9 @@ public class PlatformTest {
     }
 
     @Test
-    public void initialize_adds_all_components() {
+    public void initialize_adds_bundles() {
         final Bundle bundle = mock(Bundle.class);
         final Class<TestBundle> bundleClass = TestBundle.class;
-        final Command command = mock(Command.class);
-        final Class<TestCommand> commandClass = TestCommand.class;
-        final Initializer initializer = mock(Initializer.class);
-        final Class<TestInitializer> initializerClass = TestInitializer.class;
 
         Application application = new SimpleApplication() {
             @Override
@@ -331,10 +327,6 @@ public class PlatformTest {
                     protected void configure() {
                         bindBundle(bundle);
                         bindBundle(bundleClass);
-                        bindCommand(command);
-                        bindCommand(commandClass);
-                        bindInitializer(initializer);
-                        bindInitializer(initializerClass);
                     }
                 });
             }
@@ -346,10 +338,57 @@ public class PlatformTest {
 
         verify(bootstrap).addBundle(eq(bundle));
         verify(bootstrap).addBundle(isA(TestBundle.class));
+    }
+
+    @Test
+    public void initialize_adds_commands() {
+        final Command command = mock(Command.class);
+        final Class<TestCommand> commandClass = TestCommand.class;
+
+        Application application = new SimpleApplication() {
+            @Override
+            protected void configure() {
+                loadPlugin(new AbstractPlugin() {
+                    @Override
+                    protected void configure() {
+                        bindCommand(command);
+                        bindCommand(commandClass);
+                    }
+                });
+            }
+        };
+
+        Bootstrap<PlatformConfiguration> bootstrap = mock(Bootstrap.class);
+
+        new Platform(application).initialize(bootstrap);
 
         verify(bootstrap).addCommand(eq(command));
         verify(bootstrap).addCommand(isA(TestCommand.class));
+    }
 
+    @Test
+    public void initialize_adds_initializers() {
+        final Initializer initializer = mock(Initializer.class);
+        final Class<TestInitializer> initializerClass = TestInitializer.class;
+
+        Application application = new SimpleApplication() {
+            @Override
+            protected void configure() {
+                loadPlugin(new AbstractPlugin() {
+                    @Override
+                    protected void configure() {
+                        bindInitializer(initializer);
+                        bindInitializer(initializerClass);
+                    }
+                });
+            }
+        };
+
+        Bootstrap<PlatformConfiguration> bootstrap = mock(Bootstrap.class);
+
+        new Platform(application).initialize(bootstrap);
+
+        // TODO: Add a verification for the class-generated Initializer
         verify(initializer).initialize(eq(bootstrap));
     }
 }
