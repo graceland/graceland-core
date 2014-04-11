@@ -214,7 +214,6 @@ public class PlatformTest {
         final String filterName = "my-filter-name";
         final Filter filter = mock(Filter.class);
         final Class<TestFilter> filterClass = TestFilter.class;
-        final TestFilter patternedFilter = new TestFilter();
 
         EnumSet<DispatcherType> dispatcherTypes = EnumSet.allOf(DispatcherType.class);
         ImmutableList<String> urlPatterns = ImmutableList.of("/*", "/test");
@@ -245,6 +244,43 @@ public class PlatformTest {
 
         verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypes), eq(true), eq("/*"));
         verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypes), eq(true), eq("/test"));
+    }
+
+    @Test
+    public void run_adds_filter_and_joins_FilterPatterns_correctly() throws Exception {
+        final Filter filter = mock(Filter.class);
+        final EnumSet<DispatcherType> dispatcherTypesA = EnumSet.allOf(DispatcherType.class);
+        final EnumSet<DispatcherType> dispatcherTypesB = EnumSet.of(DispatcherType.ASYNC);
+
+        FilterRegistration.Dynamic filterDynamic = mock(FilterRegistration.Dynamic.class);
+        when(servletEnvironment.addFilter(anyString(), any(TestFilter.class))).thenReturn(filterDynamic);
+
+        Application application = buildApplication(
+                new AbstractPlugin() {
+                    @Override
+                    protected void configure() {
+                        buildFilter(filter)
+                                .withPattern(FilterPattern.newInstance(dispatcherTypesA, true, "/a", "/b"))
+                                .withPattern(FilterPattern.newInstance(dispatcherTypesA, true, "/c", "/d"))
+                                .withPattern(FilterPattern.newInstance(dispatcherTypesB, true, "/e", "/f"))
+                                .withPattern(FilterPattern.newInstance(dispatcherTypesB, false, "/g", "/h"))
+                                .bind();
+                    }
+                }
+        );
+
+        new Platform(application).run(configuration, environment);
+
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesA), eq(true), eq("/a"));
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesA), eq(true), eq("/b"));
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesA), eq(true), eq("/c"));
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesA), eq(true), eq("/d"));
+
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesB), eq(true), eq("/e"));
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesB), eq(true), eq("/f"));
+
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesB), eq(false), eq("/g"));
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesB), eq(false), eq("/h"));
     }
 
     @Test
