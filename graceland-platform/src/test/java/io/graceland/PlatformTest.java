@@ -1,6 +1,9 @@
 package io.graceland;
 
+import java.util.EnumSet;
+import javax.servlet.DispatcherType;
 import javax.servlet.Filter;
+import javax.servlet.FilterRegistration;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -22,6 +25,7 @@ import io.graceland.application.Application;
 import io.graceland.application.SimpleApplication;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.Initializer;
+import io.graceland.filter.FilterPattern;
 import io.graceland.plugin.AbstractPlugin;
 import io.graceland.plugin.Plugin;
 import io.graceland.testing.TestBundle;
@@ -209,12 +213,25 @@ public class PlatformTest {
         final String filterName = "my-filter-name";
         final Filter filter = mock(Filter.class);
         final Class<TestFilter> filterClass = TestFilter.class;
+        final TestFilter patternedFilter = new TestFilter();
+
+        EnumSet<DispatcherType> dispatcherTypes = EnumSet.allOf(DispatcherType.class);
+        ImmutableList<String> urlPatterns = ImmutableList.of("/*", "/test");
+
+        final FilterPattern filterPattern = new FilterPattern(dispatcherTypes, true, urlPatterns);
+
+        FilterRegistration.Dynamic filterDynamic = mock(FilterRegistration.Dynamic.class);
+        when(servletEnvironment.addFilter(anyString(), eq(patternedFilter))).thenReturn(filterDynamic);
 
         Application application = buildApplication(
                 new AbstractPlugin() {
                     @Override
                     protected void configure() {
-                        buildFilter(filter).withName(filterName).withPriority(999).bind();
+                        buildFilter(filter)
+                                .withName(filterName)
+                                .withPriority(999)
+                                .withPattern(filterPattern)
+                                .bind();
                         buildFilter(filterClass).withPriority(0).bind();
                     }
                 }
@@ -224,6 +241,9 @@ public class PlatformTest {
 
         verify(servletEnvironment).addFilter(eq(filterClass.getSimpleName()), isA(filterClass));
         verify(servletEnvironment).addFilter(eq(filterName), eq(filter));
+
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypes), eq(true), eq("/*"));
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypes), eq(true), eq("/test"));
     }
 
     @Test

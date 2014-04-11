@@ -94,6 +94,10 @@ public class FilterBinder {
         return this;
     }
 
+    public FilterBinder withPattern(FilterPattern filterPattern) {
+        return this;
+    }
+
     /**
      * Builds a {@link io.graceland.filter.FilterSpec} and adds it to the Guice dependency graph.
      */
