@@ -4,6 +4,7 @@ import javax.servlet.Filter;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.multibindings.Multibinder;
@@ -15,13 +16,16 @@ import io.graceland.inject.Graceland;
  *
  * @see io.graceland.filter.FilterSpec
  * @see io.graceland.filter.FilterProvider
+ * @see io.graceland.filter.FilterPattern
  */
 public class FilterBinder {
     public static final int DEFAULT_PRIORITY = 500;
+    public static final FilterPattern DEFAULT_PATTERN = FilterPattern.forPatterns("/*");
 
     private final Binder binder;
     private final Class<? extends Filter> filterClass;
     private final Provider<? extends Filter> filterProvider;
+    private final ImmutableList.Builder<FilterPattern> filterPatterns;
 
     private int priority = DEFAULT_PRIORITY;
     private Optional<String> name = Optional.absent();
@@ -34,6 +38,7 @@ public class FilterBinder {
         this.binder = Preconditions.checkNotNull(binder, "Binder cannot be null.");
         this.filterClass = Preconditions.checkNotNull(filterClass, "Filter Class cannot be null.");
         this.filterProvider = Preconditions.checkNotNull(filterProvider, "Filter Provider cannot be null.");
+        this.filterPatterns = ImmutableList.builder();
     }
 
     /**
@@ -95,17 +100,40 @@ public class FilterBinder {
     }
 
     /**
+     * Adds a {@link io.graceland.filter.FilterPattern} to the final filter. You can add more than one with the binder.
+     *
+     * @param filterPattern The filter pattern to add.
+     * @return The current Filter Binder.
+     */
+    public FilterBinder addPattern(FilterPattern filterPattern) {
+        Preconditions.checkNotNull(filterPattern, "Filter Pattern cannot be null.");
+        filterPatterns.add(filterPattern);
+        return this;
+    }
+
+    /**
      * Builds a {@link io.graceland.filter.FilterSpec} and adds it to the Guice dependency graph.
      */
     public void bind() {
         FilterSpec fitlerSpec = new FilterSpec(
                 filterProvider,
                 priority,
-                name.or(filterClass.getSimpleName()));
+                name.or(filterClass.getSimpleName()),
+                buildPatterns());
 
         Multibinder
                 .newSetBinder(binder, FilterSpec.class, Graceland.class)
                 .addBinding()
                 .toInstance(fitlerSpec);
+    }
+
+    private ImmutableList<FilterPattern> buildPatterns() {
+        ImmutableList<FilterPattern> patterns = filterPatterns.build();
+
+        if (patterns.isEmpty()) {
+            patterns = ImmutableList.of(FilterBinder.DEFAULT_PATTERN);
+        }
+
+        return patterns;
     }
 }

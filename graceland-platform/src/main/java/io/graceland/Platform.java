@@ -1,6 +1,7 @@
 package io.graceland;
 
 import java.util.List;
+import javax.servlet.FilterRegistration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +22,7 @@ import io.graceland.application.Application;
 import io.graceland.dropwizard.Configurator;
 import io.graceland.dropwizard.DropwizardModule;
 import io.graceland.dropwizard.Initializer;
+import io.graceland.filter.FilterPattern;
 import io.graceland.filter.FilterSpec;
 import io.graceland.inject.InjectorWrapper;
 
@@ -134,10 +136,23 @@ public class Platform extends io.dropwizard.Application<PlatformConfiguration> {
         }
 
         for (FilterSpec filterSpec : wrapper.getFilterSpecs()) {
-            environment.servlets().addFilter(filterSpec.getName(), filterSpec.getFilter());
+            registerFilterSpec(environment, filterSpec);
+
             LOGGER.debug("Registered Filter {}: {}",
                     filterSpec.getName(),
                     filterSpec.getFilter().getClass().getCanonicalName());
+        }
+    }
+
+    private void registerFilterSpec(Environment environment, FilterSpec filterSpec) {
+        FilterRegistration.Dynamic dynamic = environment.servlets().addFilter(
+                filterSpec.getName(),
+                filterSpec.getFilter());
+
+        for (FilterPattern pattern : filterSpec.getPatterns()) {
+            for (String urlPattern : pattern.getUrlPatterns()) {
+                dynamic.addMappingForUrlPatterns(pattern.getDispatcherTypes(), pattern.isMatchAfter(), urlPattern);
+            }
         }
     }
 }
