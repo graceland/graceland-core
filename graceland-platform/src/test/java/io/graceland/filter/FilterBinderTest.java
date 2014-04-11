@@ -9,10 +9,12 @@ import com.google.inject.Injector;
 import io.graceland.inject.Keys;
 import io.graceland.testing.TestFilter;
 
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.mock;
 
 public class FilterBinderTest {
 
@@ -64,7 +66,33 @@ public class FilterBinderTest {
         verifyInjectedValue(abstractModule, FilterBinder.DEFAULT_PRIORITY, TestFilter.class.getSimpleName());
     }
 
-    private void verifyInjectedValue(AbstractModule abstractModule, int priority, String name) {
+    @Test
+    public void can_add_more_than_one_patterns() {
+        final FilterPattern pattern1 = mock(FilterPattern.class);
+        final FilterPattern pattern2 = mock(FilterPattern.class);
+
+        AbstractModule abstractModule = new AbstractModule() {
+            @Override
+            protected void configure() {
+                FilterBinder
+                        .forClass(binder(), TestFilter.class)
+                        .withPriority(filterPriority)
+                        .withPattern(pattern1)
+                        .withPattern(pattern2)
+                        .withName(filterName)
+                        .bind();
+            }
+        };
+
+        verifyInjectedValue(abstractModule, filterPriority, filterName, pattern1, pattern2);
+    }
+
+    private void verifyInjectedValue(
+            AbstractModule abstractModule,
+            int priority,
+            String name,
+            FilterPattern... patterns) {
+
         Injector injector = Guice.createInjector(abstractModule);
 
         FilterSpec filterSpec = Iterables.getFirst(injector.getInstance(Keys.FilterSpecs), null);
@@ -72,5 +100,7 @@ public class FilterBinderTest {
         assertThat(filterSpec, is(not(nullValue())));
         assertThat(filterSpec.getPriority(), is(priority));
         assertThat(filterSpec.getName(), is(name));
+
+        assertThat(filterSpec.getPatterns(), containsInAnyOrder(patterns));
     }
 }

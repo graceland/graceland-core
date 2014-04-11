@@ -4,6 +4,7 @@ import java.util.Comparator;
 import javax.servlet.Filter;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.inject.Provider;
 
 /**
@@ -47,5 +48,9 @@ public class FilterSpec {
 
     public String getName() {
         return name;
+    }
+
+    public ImmutableList<FilterPattern> getPatterns() {
+        return ImmutableList.of();
     }
 }

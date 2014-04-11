@@ -4,6 +4,7 @@ import javax.servlet.Filter;
 
 import com.google.common.base.Optional;
 import com.google.common.base.Preconditions;
+import com.google.common.collect.ImmutableList;
 import com.google.inject.Binder;
 import com.google.inject.Provider;
 import com.google.inject.multibindings.Multibinder;
@@ -22,6 +23,7 @@ public class FilterBinder {
     private final Binder binder;
     private final Class<? extends Filter> filterClass;
     private final Provider<? extends Filter> filterProvider;
+    private final ImmutableList.Builder<FilterPattern> filterPatterns;
 
     private int priority = DEFAULT_PRIORITY;
     private Optional<String> name = Optional.absent();
@@ -34,6 +36,7 @@ public class FilterBinder {
         this.binder = Preconditions.checkNotNull(binder, "Binder cannot be null.");
         this.filterClass = Preconditions.checkNotNull(filterClass, "Filter Class cannot be null.");
         this.filterProvider = Preconditions.checkNotNull(filterProvider, "Filter Provider cannot be null.");
+        this.filterPatterns = ImmutableList.builder();
     }
 
     /**
@@ -95,6 +98,8 @@ public class FilterBinder {
     }
 
     public FilterBinder withPattern(FilterPattern filterPattern) {
+        Preconditions.checkNotNull(filterPattern, "Filter Pattern cannot be null.");
+        filterPatterns.add(filterPattern);
         return this;
     }
 
@@ -105,7 +110,8 @@ public class FilterBinder {
         FilterSpec fitlerSpec = new FilterSpec(
                 filterProvider,
                 priority,
-                name.or(filterClass.getSimpleName()));
+                name.or(filterClass.getSimpleName()),
+                filterPatterns.build());
 
         Multibinder
                 .newSetBinder(binder, FilterSpec.class, Graceland.class)
