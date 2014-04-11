@@ -219,7 +219,7 @@ public class PlatformTest {
         EnumSet<DispatcherType> dispatcherTypes = EnumSet.allOf(DispatcherType.class);
         ImmutableList<String> urlPatterns = ImmutableList.of("/*", "/test");
 
-        final FilterPattern filterPattern = new FilterPattern(dispatcherTypes, true, urlPatterns);
+        final FilterPattern filterPattern = FilterPattern.newInstance(dispatcherTypes, true, urlPatterns);
 
         FilterRegistration.Dynamic filterDynamic = mock(FilterRegistration.Dynamic.class);
         when(servletEnvironment.addFilter(anyString(), any(TestFilter.class))).thenReturn(filterDynamic);
