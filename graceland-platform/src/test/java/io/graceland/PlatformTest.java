@@ -227,7 +227,7 @@ public class PlatformTest {
                         buildFilter(filterClass)
                                 .withName(filterName)
                                 .withPriority(999)
-                                .withPattern(filterPattern)
+                                .addPattern(filterPattern)
                                 .bind();
                     }
                 }
@@ -259,7 +259,7 @@ public class PlatformTest {
                         buildFilter(filter)
                                 .withName(filterName)
                                 .withPriority(999)
-                                .withPattern(filterPattern)
+                                .addPattern(filterPattern)
                                 .bind();
                     }
                 }
@@ -287,10 +287,10 @@ public class PlatformTest {
                     @Override
                     protected void configure() {
                         buildFilter(filter)
-                                .withPattern(FilterPattern.newInstance(dispatcherTypesA, true, "/a", "/b"))
-                                .withPattern(FilterPattern.newInstance(dispatcherTypesA, true, "/c", "/d"))
-                                .withPattern(FilterPattern.newInstance(dispatcherTypesB, true, "/e", "/f"))
-                                .withPattern(FilterPattern.newInstance(dispatcherTypesB, false, "/g", "/h"))
+                                .addPattern(FilterPattern.newInstance(dispatcherTypesA, true, "/a", "/b"))
+                                .addPattern(FilterPattern.newInstance(dispatcherTypesA, true, "/c", "/d"))
+                                .addPattern(FilterPattern.newInstance(dispatcherTypesB, true, "/e", "/f"))
+                                .addPattern(FilterPattern.newInstance(dispatcherTypesB, false, "/g", "/h"))
                                 .bind();
                     }
                 }

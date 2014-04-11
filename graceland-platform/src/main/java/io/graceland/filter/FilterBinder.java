@@ -16,6 +16,7 @@ import io.graceland.inject.Graceland;
  *
  * @see io.graceland.filter.FilterSpec
  * @see io.graceland.filter.FilterProvider
+ * @see io.graceland.filter.FilterPattern
  */
 public class FilterBinder {
     public static final int DEFAULT_PRIORITY = 500;
@@ -98,7 +99,13 @@ public class FilterBinder {
         return this;
     }
 
-    public FilterBinder withPattern(FilterPattern filterPattern) {
+    /**
+     * Adds a {@link io.graceland.filter.FilterPattern} to the final filter. You can add more than one with the binder.
+     *
+     * @param filterPattern The filter pattern to add.
+     * @return The current Filter Binder.
+     */
+    public FilterBinder addPattern(FilterPattern filterPattern) {
         Preconditions.checkNotNull(filterPattern, "Filter Pattern cannot be null.");
         filterPatterns.add(filterPattern);
         return this;

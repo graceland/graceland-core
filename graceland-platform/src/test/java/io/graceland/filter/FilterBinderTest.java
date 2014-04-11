@@ -81,8 +81,8 @@ public class FilterBinderTest {
                 FilterBinder
                         .forClass(binder(), TestFilter.class)
                         .withPriority(filterPriority)
-                        .withPattern(pattern1)
-                        .withPattern(pattern2)
+                        .addPattern(pattern1)
+                        .addPattern(pattern2)
                         .withName(filterName)
                         .bind();
             }
