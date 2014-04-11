@@ -22,15 +22,18 @@ public class FilterSpec {
     private final Provider<? extends Filter> filterProvider;
     private final int priority;
     private final String name;
+    private final ImmutableList<FilterPattern> patterns;
 
     FilterSpec(
             Provider<? extends Filter> filterProvider,
             int priority,
-            String name) {
+            String name,
+            ImmutableList<FilterPattern> patterns) {
 
         this.filterProvider = Preconditions.checkNotNull(filterProvider, "Filter Provider cannot be null.");
         this.priority = Preconditions.checkNotNull(priority, "Priority cannot be null.");
         this.name = Preconditions.checkNotNull(name, "Name cannot be null.");
+        this.patterns = Preconditions.checkNotNull(patterns, "Filter Patterns cannot be null.");
     }
 
     public Filter getFilter() {
@@ -51,6 +54,6 @@ public class FilterSpec {
     }
 
     public ImmutableList<FilterPattern> getPatterns() {
-        return ImmutableList.of();
+        return patterns;
     }
 }
