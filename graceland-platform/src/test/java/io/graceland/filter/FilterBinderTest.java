@@ -35,7 +35,7 @@ public class FilterBinderTest {
             }
         };
 
-        verifyInjectedValue(abstractModule, filterPriority, filterName);
+        verifyInjectedValue(abstractModule, filterPriority, filterName, FilterBinder.DEFAULT_PATTERN);
     }
 
     @Test
@@ -51,7 +51,7 @@ public class FilterBinderTest {
             }
         };
 
-        verifyInjectedValue(abstractModule, filterPriority, filterName);
+        verifyInjectedValue(abstractModule, filterPriority, filterName, FilterBinder.DEFAULT_PATTERN);
     }
 
     @Test
@@ -63,7 +63,11 @@ public class FilterBinderTest {
             }
         };
 
-        verifyInjectedValue(abstractModule, FilterBinder.DEFAULT_PRIORITY, TestFilter.class.getSimpleName());
+        verifyInjectedValue(
+                abstractModule,
+                FilterBinder.DEFAULT_PRIORITY,
+                TestFilter.class.getSimpleName(),
+                FilterBinder.DEFAULT_PATTERN);
     }
 
     @Test

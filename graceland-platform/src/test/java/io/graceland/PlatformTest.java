@@ -210,15 +210,44 @@ public class PlatformTest {
     }
 
     @Test
-    public void run_adds_filters() throws Exception {
+    public void run_adds_filter_by_class() throws Exception {
         final String filterName = "my-filter-name";
-        final Filter filter = mock(Filter.class);
         final Class<TestFilter> filterClass = TestFilter.class;
 
         EnumSet<DispatcherType> dispatcherTypes = EnumSet.allOf(DispatcherType.class);
-        ImmutableList<String> urlPatterns = ImmutableList.of("/*", "/test");
+        final FilterPattern filterPattern = FilterPattern.newInstance(dispatcherTypes, true, "/*", "/test");
 
-        final FilterPattern filterPattern = FilterPattern.newInstance(dispatcherTypes, true, urlPatterns);
+        FilterRegistration.Dynamic filterDynamic = mock(FilterRegistration.Dynamic.class);
+        when(servletEnvironment.addFilter(anyString(), any(TestFilter.class))).thenReturn(filterDynamic);
+
+        Application application = buildApplication(
+                new AbstractPlugin() {
+                    @Override
+                    protected void configure() {
+                        buildFilter(filterClass)
+                                .withName(filterName)
+                                .withPriority(999)
+                                .withPattern(filterPattern)
+                                .bind();
+                    }
+                }
+        );
+
+        new Platform(application).run(configuration, environment);
+
+        verify(servletEnvironment).addFilter(eq(filterName), isA(filterClass));
+
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypes), eq(true), eq("/*"));
+        verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypes), eq(true), eq("/test"));
+    }
+
+    @Test
+    public void run_adds_filter_by_instance() throws Exception {
+        final String filterName = "my-filter-name";
+        final Filter filter = mock(TestFilter.class);
+
+        EnumSet<DispatcherType> dispatcherTypes = EnumSet.allOf(DispatcherType.class);
+        final FilterPattern filterPattern = FilterPattern.newInstance(dispatcherTypes, true, "/*", "/test");
 
         FilterRegistration.Dynamic filterDynamic = mock(FilterRegistration.Dynamic.class);
         when(servletEnvironment.addFilter(anyString(), any(TestFilter.class))).thenReturn(filterDynamic);
@@ -232,14 +261,12 @@ public class PlatformTest {
                                 .withPriority(999)
                                 .withPattern(filterPattern)
                                 .bind();
-                        buildFilter(filterClass).withPriority(0).bind();
                     }
                 }
         );
 
         new Platform(application).run(configuration, environment);
 
-        verify(servletEnvironment).addFilter(eq(filterClass.getSimpleName()), isA(filterClass));
         verify(servletEnvironment).addFilter(eq(filterName), eq(filter));
 
         verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypes), eq(true), eq("/*"));

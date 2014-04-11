@@ -19,6 +19,7 @@ import io.graceland.inject.Graceland;
  */
 public class FilterBinder {
     public static final int DEFAULT_PRIORITY = 500;
+    public static final FilterPattern DEFAULT_PATTERN = FilterPattern.forPatterns("/*");
 
     private final Binder binder;
     private final Class<? extends Filter> filterClass;
@@ -111,11 +112,21 @@ public class FilterBinder {
                 filterProvider,
                 priority,
                 name.or(filterClass.getSimpleName()),
-                filterPatterns.build());
+                buildPatterns());
 
         Multibinder
                 .newSetBinder(binder, FilterSpec.class, Graceland.class)
                 .addBinding()
                 .toInstance(fitlerSpec);
+    }
+
+    private ImmutableList<FilterPattern> buildPatterns() {
+        ImmutableList<FilterPattern> patterns = filterPatterns.build();
+
+        if (patterns.isEmpty()) {
+            patterns = ImmutableList.of(FilterBinder.DEFAULT_PATTERN);
+        }
+
+        return patterns;
     }
 }
