@@ -28,6 +28,10 @@ access to the dropwizard components in each of those phases.
         }
     }
 
+.. warning:: Using an escape hatch will cause your code to run outside of the *happy path*. There
+             are few guarantees made by the ``Platform`` for running these escape hatches. If there
+             is a graceland-provided way of doing something (i.e. adding a resource), you're better
+             off using it rather than an escape hatch.
 
 Configurator
 ============
