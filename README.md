@@ -4,8 +4,8 @@ graceland-core
 
 #### Build Status
 
-- `master` [![Build Status](https://travis-ci.org/jmcampanini/graceland-core.png?branch=master)](https://travis-ci.org/jmcampanini/graceland-core)
-- `develop` [![Build Status](https://travis-ci.org/jmcampanini/graceland-core.png?branch=develop)](https://travis-ci.org/jmcampanini/graceland-core)
+- `master` [![Build Status](https://travis-ci.org/graceland/graceland-core.png?branch=master)](https://travis-ci.org/graceland/graceland-core)
+- `develop` [![Build Status](https://travis-ci.org/graceland/graceland-core.png?branch=develop)](https://travis-ci.org/graceland/graceland-core)
 
 
 About
@@ -22,7 +22,7 @@ easily and modularly.
 Documentation
 -------------
 
-The documentation can be found on the [graceland-core github pages](http://jmcampanini.github.io/graceland-core).
+The documentation can be found on the [graceland-core read the docs](http://graceland-core.readthedocs.org).
 
 
 More Info
