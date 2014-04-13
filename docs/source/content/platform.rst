@@ -2,25 +2,28 @@
 Platform
 ########
 
-.. rubric:: The ``graceland-platform`` module provides everything you'll need to build out modular
-            Dropwizard applications.
 
+The ``Platform`` replaces the ``io.dropwizard.Application`` in your graceland system. It's the base
+for your service, and is what is responsible for wiring everything up.
 
-Platform
-========
+To start up a ``Platform``, just create one and call the ``start(String[] args)`` method, where the
+args are the command line arguments. A good place to put this is in a ``public static void main``
+clause. Here's an example:
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-in culpa qui officia deserunt mollit anim id est laborum.
+.. code-block:: java
+
+    public static void main(String[] args) throws Exception {
+        Platform
+                .forApplication(new ExampleApplication())
+                .start(args);
+    }
 
 
 Platform Configuration
 ======================
 
-Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris
-nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit
-esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt
-in culpa qui officia deserunt mollit anim id est laborum.
+The graceland ``Platform`` has a single, platform-wide configuration. This extends the dropwizard
+``io.dropwizard.Configuration`` class, and is where the user will set the HTTP ports, logging, etc.
+
+In your graceland system, you may have more than one configuration file, but only one Platform
+configuration. For more information on configurations, see the Configuration section.
