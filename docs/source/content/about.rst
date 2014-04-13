@@ -6,7 +6,7 @@ About
 Contributing
 ============
 
-We're on `github <https://github.com/jmcampanini/graceland-core>`_, so just head over there, fork the repo, and submit
+We're on `github <https://github.com/graceland/graceland-core>`_, so just head over there, fork the repo, and submit
 a pull request.
 
 While Test-Driven Development is not strictly required, it is highly encouraged, and at the very least, a high degree
