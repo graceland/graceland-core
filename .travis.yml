@@ -14,3 +14,11 @@ branches:
     only:
         - master
         - develop
+
+after_success:
+    - mvn clean deploy --settings travis/settings.xml
+
+env:
+    global:
+        - secure: mmRiOepYFtdARJMvJt6GF+MEuX6iXhnmGyi98WhqILS4kHmKx58LXZTwC5zzydd6pcBvkREWkhLryOdtM7REseljSkFIY/6I4hMzlrCsb8+SRpOB0ESsMGAEJ9apmV6tDw+HYumtE97ZcI9vNuVydxtSp9kTPEAqjumsbLs+kWw=
+        - secure: iEqLk/aJLg+NHPIFBTBs1OFMsZg8c/xQsamOi8UbBztLc2TyK/wee0ATkSHcmFLI8ZLtAnjim34/E5EPs7n4QZD/z8Kt0pEXtCUVXf0qW5WgyWKAVrNW0JTv/Jbqy9wQKRZ4RkdkU9IA76LFWUGpsBYY69NtAjDDEERoE9b8NkM=
