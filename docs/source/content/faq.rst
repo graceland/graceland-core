@@ -1,6 +1,6 @@
-#####
-About
-#####
+##########################
+Frequently Asked Questions
+##########################
 
 
 Contributing

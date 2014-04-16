@@ -11,7 +11,6 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   content/about
    content/overview
    content/getting-started
 
@@ -23,6 +22,8 @@ Contents:
    content/escape-hatches
 
    content/metrics-graphite
+
+   content/faq
 
 Indices and tables
 ==================
