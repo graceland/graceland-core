@@ -4,19 +4,15 @@ language: java
 
 install: echo "I trust Maven."
 
-script: mvn verify
+script: mvn deploy --settings travis/settings.xml
 
 jdk:
     - oraclejdk7
-    - openjdk7
 
 branches:
     only:
         - master
         - develop
-
-after_success:
-    - mvn clean deploy --settings travis/settings.xml
 
 env:
     global:
