@@ -14,6 +14,7 @@ import io.dropwizard.metrics.graphite.GraphiteReporterFactory;
 public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(HostAwareGraphiteReporterFactory.class);
     private static final CharMatcher NON_ALPHANUMERIC = CharMatcher.JAVA_LETTER_OR_DIGIT.negate();
+    private static final String NON_ALPHANUMERIC_REPLACEMENT = "_";
     private static final String HOSTNAME_VARIABLE = "%s";
     private static final String HOSTNAME_REGEX = ".*%[^s].*";
 
@@ -25,7 +26,7 @@ public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
         try {
             InetAddress address = InetAddress.getLocalHost();
             possibleHostName = address.getHostName();
-            possibleHostName = NON_ALPHANUMERIC.replaceFrom(possibleHostName, "_");
+            possibleHostName = NON_ALPHANUMERIC.replaceFrom(possibleHostName, NON_ALPHANUMERIC_REPLACEMENT);
             LOGGER.info("Using the following hostname for the graphite prefix: {}", possibleHostName);
 
         } catch (UnknownHostException e) {
