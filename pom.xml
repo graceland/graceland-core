@@ -6,7 +6,7 @@
     <groupId>io.graceland</groupId>
     <artifactId>graceland-core</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.2.0-SNAPSHOT</version>
 
     <name>graceland-core</name>
     <url>${graceland.url}</url>
@@ -37,7 +37,7 @@
         <connection>scm:git:git://github.com/graceland/graceland-core.git</connection>
         <developerConnection>scm:git:git@github.com:graceland/graceland-core.git</developerConnection>
         <url>https://github.com/graceland/graceland-core</url>
-        <tag>release/0.1.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <issueManagement>
