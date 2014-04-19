@@ -21,6 +21,7 @@ There are a lot of advantages to having a modular system.
 - **Swap Out Functionality** - It gives you the ability to swap out components, making it easy to
   change the functionality of your application in a sane and easy to understand way.
 
+- **Develop in Parallel** - Plugins can be developed in parallel, and used by the same application.
 
 Plugins vs. Modules
 ===================

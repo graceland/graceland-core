@@ -5,6 +5,41 @@ Getting Started
 .. rubric:: A quick guide to getting started using Graceland, using the example of a counting
             machine, and resources and tasks that use a ``CountingMachine`` singleton.
 
+Step 0 - Depending On It
+========================
+
+Maven Instructions:
+
+.. code-block:: xml
+
+    <repositories>
+        <repository>
+            <id>Sonatype Snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.graceland</groupId>
+            <artifactId>graceland-platform</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+        </dependency>
+    <dependencies>
+
+Gradle Instructions:
+
+.. code-block:: groovy
+
+    repositories {
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+
+    dependencies {
+        compile “io.graceland:graceland-platform:0.1.0-SNAPSHOT"
+    }
 
 Step 1 - Silly Counting Machine
 ===============================
