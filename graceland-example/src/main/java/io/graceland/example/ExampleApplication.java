@@ -1,8 +1,8 @@
 package io.graceland.example;
 
-import io.graceland.Platform;
-import io.graceland.application.SimpleApplication;
+import io.graceland.platform.application.SimpleApplication;
 import io.graceland.example.startingon.StartingOnCountingPlugin;
+import io.graceland.platform.Platform;
 
 public class ExampleApplication extends SimpleApplication {
 

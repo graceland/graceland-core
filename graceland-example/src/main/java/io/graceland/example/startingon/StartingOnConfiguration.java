@@ -3,7 +3,7 @@ package io.graceland.example.startingon;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.graceland.configuration.Configuration;
+import io.graceland.platform.configuration.Configuration;
 
 public class StartingOnConfiguration implements Configuration {
 

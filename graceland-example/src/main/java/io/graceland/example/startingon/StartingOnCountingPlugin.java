@@ -3,7 +3,7 @@ package io.graceland.example.startingon;
 import com.google.inject.Singleton;
 
 import io.graceland.example.counting.CountingMachine;
-import io.graceland.plugin.AbstractPlugin;
+import io.graceland.platform.plugin.AbstractPlugin;
 
 public class StartingOnCountingPlugin extends AbstractPlugin {
 
