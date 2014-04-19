@@ -7,17 +7,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.google.common.base.CharMatcher;
+import com.google.common.base.Preconditions;
 
 import io.dropwizard.metrics.graphite.GraphiteReporterFactory;
 
 @JsonTypeName("graphite-hostaware")
 public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
     private static final Logger LOGGER = LoggerFactory.getLogger(HostAwareGraphiteReporterFactory.class);
-    private static final CharMatcher NON_ALPHANUMERIC = CharMatcher.JAVA_LETTER_OR_DIGIT.negate();
+    private static final CharMatcher NON_ALPHANUMERIC_MATCHER = CharMatcher.JAVA_LETTER_OR_DIGIT.negate();
     private static final String NON_ALPHANUMERIC_REPLACEMENT = "_";
     private static final String HOSTNAME_VARIABLE = "%s";
-    private static final String HOSTNAME_REGEX = ".*%[^s].*";
-    public static final String UNKNOWN_HOSTNAME = "";
+    private static final String INVALID_VARIABLE_PATTERN = ".*%[^s].*";
+    private static final String UNKNOWN_HOSTNAME = "";
 
     private final String hostName;
 
@@ -29,7 +30,7 @@ public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
         try {
             InetAddress address = InetAddress.getLocalHost();
             String possibleHostName = address.getHostName();
-            possibleHostName = NON_ALPHANUMERIC.replaceFrom(possibleHostName, NON_ALPHANUMERIC_REPLACEMENT);
+            possibleHostName = NON_ALPHANUMERIC_MATCHER.replaceFrom(possibleHostName, NON_ALPHANUMERIC_REPLACEMENT);
 
             LOGGER.info("Using the following hostname for the graphite prefix: {}", possibleHostName);
             return possibleHostName;
@@ -42,11 +43,9 @@ public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
 
     @Override
     public void setPrefix(String prefix) {
-        String regex = HOSTNAME_REGEX;
-
-        if (prefix.matches(regex)) {
-            throw new IllegalArgumentException("The prefix can not contain a `%` without a trailing `s`.");
-        }
+        Preconditions.checkArgument(
+                !prefix.matches(INVALID_VARIABLE_PATTERN),
+                "The prefix contains an invalid hostname pattern.");
 
         super.setPrefix(prefix);
     }
