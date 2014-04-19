@@ -17,23 +17,27 @@ public class HostAwareGraphiteReporterFactory extends GraphiteReporterFactory {
     private static final String NON_ALPHANUMERIC_REPLACEMENT = "_";
     private static final String HOSTNAME_VARIABLE = "%s";
     private static final String HOSTNAME_REGEX = ".*%[^s].*";
+    public static final String UNKNOWN_HOSTNAME = "";
 
     private final String hostName;
 
     public HostAwareGraphiteReporterFactory() {
-        String possibleHostName = "";
+        this.hostName = getHostName();
+    }
 
+    private String getHostName() {
         try {
             InetAddress address = InetAddress.getLocalHost();
-            possibleHostName = address.getHostName();
+            String possibleHostName = address.getHostName();
             possibleHostName = NON_ALPHANUMERIC.replaceFrom(possibleHostName, NON_ALPHANUMERIC_REPLACEMENT);
+
             LOGGER.info("Using the following hostname for the graphite prefix: {}", possibleHostName);
+            return possibleHostName;
 
         } catch (UnknownHostException e) {
             LOGGER.error("Could not get the local host name.", e);
+            return UNKNOWN_HOSTNAME;
         }
-
-        this.hostName = possibleHostName;
     }
 
     @Override
