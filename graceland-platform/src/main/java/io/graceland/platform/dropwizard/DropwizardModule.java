@@ -8,8 +8,8 @@ import com.google.inject.Provides;
 import com.google.inject.Singleton;
 
 import io.dropwizard.setup.Environment;
-import io.graceland.platform.inject.Graceland;
 import io.graceland.platform.PlatformConfiguration;
+import io.graceland.platform.inject.Graceland;
 
 /**
  * This module is used to provide Dropwizard specific objects to the Guice dependency graph. It will only have access
