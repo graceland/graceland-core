@@ -17,6 +17,7 @@ Contents:
    content/plugins
    content/applications
    content/configurations
+   content/filters
 
    content/platform
    content/escape-hatches
