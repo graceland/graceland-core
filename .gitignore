@@ -84,3 +84,7 @@ initScript.sh
 
 ### Sphinx ###
 docs/build
+
+
+### Deployment Process ###
+deploy.sh
