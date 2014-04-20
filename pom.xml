@@ -18,6 +18,7 @@
         <module>graceland-platform</module>
         <module>graceland-metrics-graphite</module>
         <module>graceland-example</module>
+        <module>graceland-client</module>
     </modules>
 
     <properties>
