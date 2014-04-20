@@ -5,7 +5,6 @@ import com.codahale.metrics.MetricRegistry;
 import com.codahale.metrics.Timer;
 
 import retrofit.Profiler;
-import retrofit.RestAdapter;
 
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -56,6 +55,26 @@ public class MeteredProfilerTest {
         MeteredProfiler.newInstance(registry, name);
 
         assertThat(registry.getTimers().keySet(), contains(name));
+    }
+
+    @Test
+    public void uses_the_passed_in_class_as_name() {
+        registry = new MetricRegistry();
+
+        MeteredProfiler.newInstanceFor(registry, TestClient.class);
+
+        assertThat(registry.getTimers().keySet(), contains(TestClient.class.getName()));
+    }
+
+    @Test
+    public void uses_the_passed_in_class_as_name_with_extras() {
+        registry = new MetricRegistry();
+
+        MeteredProfiler.newInstanceFor(registry, TestClient.class, "a", "b", "c");
+
+        assertThat(
+                registry.getTimers().keySet(),
+                contains(TestClient.class.getName() + ".a.b.c"));
     }
 
     interface TestClient {

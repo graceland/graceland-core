@@ -21,6 +21,14 @@ public class MeteredProfiler implements Profiler<Timer.Context> {
         return new MeteredProfiler(registry, metricName);
     }
 
+    public static MeteredProfiler newInstanceFor(
+            MetricRegistry registry,
+            Class klass,
+            String... extraNames) {
+
+        return new MeteredProfiler(registry, MetricRegistry.name(klass, extraNames));
+    }
+
     @Override
     public Timer.Context beforeCall() {
         return timer.time();
