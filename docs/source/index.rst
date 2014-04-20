@@ -11,18 +11,20 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   content/about
    content/overview
    content/getting-started
 
    content/plugins
    content/applications
    content/configurations
+   content/filters
 
    content/platform
    content/escape-hatches
 
    content/metrics-graphite
+
+   content/faq
 
 Indices and tables
 ==================
