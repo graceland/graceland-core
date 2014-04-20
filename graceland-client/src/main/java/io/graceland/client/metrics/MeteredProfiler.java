@@ -10,14 +10,15 @@ public class MeteredProfiler implements Profiler<Timer.Context> {
 
     private final Timer timer;
 
-    MeteredProfiler(MetricRegistry registry) {
+    MeteredProfiler(MetricRegistry registry, String metricName) {
         Preconditions.checkNotNull(registry, "Metric Registry cannot be null.");
+        Preconditions.checkNotNull(metricName, "Metric Name cannot be null.");
 
-        timer = registry.timer("timer");
+        timer = registry.timer(metricName);
     }
 
-    public static MeteredProfiler newInstance(MetricRegistry registry) {
-        return new MeteredProfiler(registry);
+    public static MeteredProfiler newInstance(MetricRegistry registry, String metricName) {
+        return new MeteredProfiler(registry, metricName);
     }
 
     @Override
