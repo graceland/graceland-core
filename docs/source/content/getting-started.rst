@@ -296,7 +296,7 @@ Now let's make a configuration class to represent the values as a POJO.
 
 .. code-block:: java
 
-    public class StartingOnConfiguration implements io.graceland.configuration.Configuration {
+    public class StartingOnConfiguration implements io.graceland.platform.configuration.Configuration {
 
         private final long startingOn;
 

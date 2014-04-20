@@ -43,7 +43,7 @@ environment.
 
 .. code-block:: java
 
-    import io.graceland.plugin.AbstractPlugin;
+    import io.graceland.platform.plugin.AbstractPlugin;
 
     public class ExamplePlugin extends AbstractPlugin {
 

@@ -21,7 +21,7 @@ You may want an application to end up having different modes of operation - load
 plugins while in the staging environment vs. the production environment. It would be ideal for
 swapping out implementations that are either not present or not deployed in a given environment.
 
-If you want different modes, you can extend the ``io.graceland.application.ModalApplication``
+If you want different modes, you can extend the ``io.graceland.platform.application.ModalApplication``
 class, and use your own enum to define the different modes.
 
 .. note:: You'll need to provide a default mode for the application in the constructor. Choosing a
@@ -74,4 +74,4 @@ Custom Applications
 ===================
 
 If the provided applications do not provide the functionality needed, you can extend them or
-write your own implementation of the ``io.graceland.application.Application`` interface.
+write your own implementation of the ``io.graceland.platform.application.Application`` interface.
