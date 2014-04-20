@@ -6,7 +6,7 @@
     <groupId>io.graceland</groupId>
     <artifactId>graceland-core</artifactId>
     <packaging>pom</packaging>
-    <version>0.1.0-SNAPSHOT</version>
+    <version>0.1.0</version>
 
     <name>graceland-core</name>
     <url>${graceland.url}</url>

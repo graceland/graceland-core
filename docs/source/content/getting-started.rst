@@ -23,7 +23,7 @@ Maven Instructions:
         <dependency>
             <groupId>io.graceland</groupId>
             <artifactId>graceland-platform</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>0.1.0</version>
         </dependency>
     <dependencies>
 
@@ -38,7 +38,7 @@ Gradle Instructions:
     }
 
     dependencies {
-        compile “io.graceland:graceland-platform:0.1.0-SNAPSHOT"
+        compile “io.graceland:graceland-platform:0.1.0"
     }
 
 Step 1 - Silly Counting Machine

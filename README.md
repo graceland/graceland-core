@@ -24,7 +24,7 @@ section.
 Depending On It
 ---------------
 
-Graceland is currently publishing a `0.1.0-SNAPSHOT` build to the Sonatype Snapshot Central Repository. Once we get to a
+Graceland is currently publishing a `0.1.0` build to the Sonatype Snapshot Central Repository. Once we get to a
 stable release, we'll be porting things over to Maven Central. Until then, use this:
 
 Maven Instructions:
@@ -40,7 +40,7 @@ Maven Instructions:
         <dependency>
             <groupId>io.graceland</groupId>
             <artifactId>graceland-platform</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
+            <version>0.1.0</version>
         </dependency>
     <dependencies>
 
@@ -53,7 +53,7 @@ Gradle Instructions:
     }
 
     dependencies {
-        compile “io.graceland:graceland-platform:0.1.0-SNAPSHOT"
+        compile “io.graceland:graceland-platform:0.1.0"
     }
 
 Documentation
