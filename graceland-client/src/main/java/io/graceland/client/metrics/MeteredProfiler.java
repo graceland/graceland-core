@@ -13,6 +13,7 @@ public class MeteredProfiler implements Profiler<Timer.Context> {
     MeteredProfiler(MetricRegistry registry, String metricName) {
         Preconditions.checkNotNull(registry, "Metric Registry cannot be null.");
         Preconditions.checkNotNull(metricName, "Metric Name cannot be null.");
+        Preconditions.checkArgument(!metricName.trim().isEmpty(), "Metric Name cannot be empty");
 
         timer = registry.timer(metricName);
     }

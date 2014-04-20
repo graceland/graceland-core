@@ -77,6 +77,11 @@ public class MeteredProfilerTest {
                 contains(TestClient.class.getName() + ".a.b.c"));
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void cannot_build_with_empty_name() {
+        MeteredProfiler.newInstance(registry, "");
+    }
+
     interface TestClient {
     }
 }
