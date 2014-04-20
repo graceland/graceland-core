@@ -26,7 +26,12 @@ public class MeteredProfiler implements Profiler<Timer.Context> {
     }
 
     @Override
-    public void afterCall(RequestInformation requestInfo, long elapsedTime, int statusCode, Timer.Context beforeCallData) {
+    public void afterCall(
+            RequestInformation requestInfo,
+            long elapsedTime,
+            int statusCode,
+            Timer.Context beforeCallData) {
 
+        beforeCallData.stop();
     }
 }
