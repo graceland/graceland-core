@@ -24,6 +24,7 @@
     <properties>
         <graceland.url>http://docs.graceland.io</graceland.url>
         <dropwizard.version>0.7.0</dropwizard.version>
+        <metrics.version>3.0.1</metrics.version>
         <guice.version>4.0-beta</guice.version>
         <shiro.version>1.2.2</shiro.version>
         <guava.version>15.0</guava.version>
