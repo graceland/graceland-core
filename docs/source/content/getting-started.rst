@@ -8,10 +8,18 @@ Getting Started
 Step 0 - Depending On It
 ========================
 
+Graceland is currently publishing to both the Sonatype Snapshot Central Repository and Maven Central.
+
+The versions currently available are:
+
+- Stable: ``0.1.0`` - available on Maven Central
+- Development: ``0.2.0-SNAPSHOT`` - available on Sonatype Snapshot
+
 Maven Instructions:
 
 .. code-block:: xml
 
+    <!-- This is only necessary if you plan on using a SNAPSHOT version -->
     <repositories>
         <repository>
             <id>Sonatype Snapshots</id>
@@ -23,7 +31,7 @@ Maven Instructions:
         <dependency>
             <groupId>io.graceland</groupId>
             <artifactId>graceland-platform</artifactId>
-            <version>0.1.0</version>
+            <version>${graceland.version}</version>
         </dependency>
     <dependencies>
 
@@ -32,13 +40,16 @@ Gradle Instructions:
 .. code-block:: groovy
 
     repositories {
+        mavenCentral()
+
+        // This is only necessary if you plan on using a SNAPSHOT version
         maven {
             url "https://oss.sonatype.org/content/repositories/snapshots/"
         }
     }
 
     dependencies {
-        compile “io.graceland:graceland-platform:0.1.0"
+        compile “io.graceland:graceland-platform:$gracelandVersion"
     }
 
 Step 1 - Silly Counting Machine
