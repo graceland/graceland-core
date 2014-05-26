@@ -62,7 +62,7 @@ Gradle Instructions:
     }
 
     dependencies {
-        compile “io.graceland:graceland-platform:$gracelandVersion"
+        compile "io.graceland:graceland-platform:$gracelandVersion"
     }
 
 Documentation

@@ -49,7 +49,7 @@ Gradle Instructions:
     }
 
     dependencies {
-        compile “io.graceland:graceland-platform:$gracelandVersion"
+        compile "io.graceland:graceland-platform:$gracelandVersion"
     }
 
 Step 1 - Silly Counting Machine
