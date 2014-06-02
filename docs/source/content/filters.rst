@@ -34,6 +34,9 @@ The example below does the following:
 - adds a filter for the class ``TestFilter``
 - sets the priority to 900
 - ensures the filter affects the following patterns: ``/test/**`` and ``/other/**``
+- the true/false parameters affect whether the pattern is applied before or after
+  other patterns. ``false`` means it'll be applied *before* other patterns, while
+  ``true`` means it'll be applied *after* other patterns
 - sets the name to ``mySpecialName``
 
 .. code-block:: java
@@ -47,8 +50,8 @@ The example below does the following:
             FilterBinder
                     .forClass(binder(), TestFilter.class)
                     .withPriority(900)
-                    .addPattern("/test/**")
-                    .addPattern("/other/**")
+                    .addPattern(FilterPattern.newInstance(EnumSet.allOf(DispatcherType.class), false, "/test*")
+                    .addPattern(FilterPattern.newInstance(EnumSet.allOf(DispatcherType.class), true, "/other/*")
                     .withName("mySpecialName")
                     .bind();
         }
