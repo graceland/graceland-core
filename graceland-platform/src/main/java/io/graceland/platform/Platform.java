@@ -11,7 +11,7 @@ public interface Platform {
      *
      * @param args The command line arguments.
      * @throws Exception The platform can throw any exception.
-     * @see io.graceland.platform.DropwizardPlatform
+     * @see io.graceland.platform.dropwizard.DropwizardPlatform
      */
     void start(String[] args) throws Exception;
 }

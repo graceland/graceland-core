@@ -1,4 +1,4 @@
-package io.graceland.platform;
+package io.graceland.platform.dropwizard;
 
 import java.util.List;
 import javax.servlet.FilterRegistration;
@@ -18,10 +18,9 @@ import io.dropwizard.lifecycle.Managed;
 import io.dropwizard.servlets.tasks.Task;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
+import io.graceland.platform.Platform;
+import io.graceland.platform.PlatformConfiguration;
 import io.graceland.platform.application.Application;
-import io.graceland.platform.dropwizard.Configurator;
-import io.graceland.platform.dropwizard.DropwizardModule;
-import io.graceland.platform.dropwizard.Initializer;
 import io.graceland.platform.filter.FilterPattern;
 import io.graceland.platform.filter.FilterSpec;
 import io.graceland.platform.inject.InjectorWrapper;

@@ -1,9 +1,9 @@
 package io.graceland.example;
 
 import io.graceland.example.startingon.StartingOnCountingPlugin;
-import io.graceland.platform.DropwizardPlatform;
 import io.graceland.platform.Platform;
 import io.graceland.platform.application.SimpleApplication;
+import io.graceland.platform.dropwizard.DropwizardPlatform;
 
 public class ExampleApplication extends SimpleApplication {
 
