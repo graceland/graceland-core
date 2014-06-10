@@ -1,11 +1,13 @@
 package io.graceland.platform.dropwizard;
 
 import java.util.List;
+import javax.annotation.Nonnull;
 import javax.servlet.FilterRegistration;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.codahale.metrics.health.HealthCheck;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableList;
 import com.google.inject.Guice;
@@ -39,6 +41,7 @@ public class DropwizardPlatform
     private final InjectorWrapper wrapper;
     private final DropwizardModule dropwizardModule = new DropwizardModule();
 
+    @VisibleForTesting
     DropwizardPlatform(Application application) {
         Preconditions.checkNotNull(application, "Application cannot be null.");
 
@@ -72,7 +75,7 @@ public class DropwizardPlatform
      * @throws Exception Starting up a Dropwizard service may throw an exception.
      */
     @Override
-    public void start(String[] args) throws Exception {
+    public void start(@Nonnull String[] args) throws Exception {
         Preconditions.checkNotNull(args, "Arguments cannot be null.");
         run(args);
     }
