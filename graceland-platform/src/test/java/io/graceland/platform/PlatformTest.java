@@ -68,7 +68,7 @@ public class PlatformTest {
     }
 
     protected Platform newPlatform(Application application) {
-        return new Platform(application);
+        return new DropwizardPlatform(application);
     }
 
     @Test(expected = NullPointerException.class)
@@ -83,17 +83,17 @@ public class PlatformTest {
         Application application = mock(Application.class);
         when(application.getPlugins()).thenReturn(ImmutableList.<Plugin>of());
 
-        Platform.forApplication(application);
+        Platform platform = DropwizardPlatform.forApplication(application);
     }
 
     @Test(expected = NullPointerException.class)
     public void cannot_build_with_null_application() {
-        Platform.forApplication(null);
+        DropwizardPlatform.forApplication(null);
     }
 
     @Test(expected = NullPointerException.class)
     public void constructed_with_valid_application() {
-        new Platform(null);
+        new DropwizardPlatform(null);
     }
 
     @Test
@@ -101,7 +101,9 @@ public class PlatformTest {
         Application application = mock(Application.class);
         when(application.getPlugins()).thenReturn(ImmutableList.<Plugin>of());
         String[] args = new String[]{};
-        new Platform(application).start(args);
+
+        Platform platform = DropwizardPlatform.forApplication(application);
+        platform.start(args);
     }
 
     @Test
@@ -119,7 +121,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).run(configuration, environment);
+        new DropwizardPlatform(application).run(configuration, environment);
 
         verify(jerseyEnvironment).register(eq(jerseyComponent));
         verify(jerseyEnvironment).register(isA(TestResource.class));
@@ -140,7 +142,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).run(configuration, environment);
+        new DropwizardPlatform(application).run(configuration, environment);
 
         verify(lifecycleEnvironment).manage(eq(managed));
         verify(lifecycleEnvironment).manage(isA(TestManaged.class));
@@ -161,7 +163,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).run(configuration, environment);
+        new DropwizardPlatform(application).run(configuration, environment);
 
         verify(healthCheckRegistry).register(anyString(), eq(healthCheck));
         verify(healthCheckRegistry).register(anyString(), isA(TestHealthCheck.class));
@@ -182,7 +184,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).run(configuration, environment);
+        new DropwizardPlatform(application).run(configuration, environment);
 
         verify(adminEnvironment).addTask(eq(task));
         verify(adminEnvironment).addTask(isA(TestTask.class));
@@ -203,7 +205,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).run(configuration, environment);
+        new DropwizardPlatform(application).run(configuration, environment);
 
         verify(configurator).configure(configuration, environment);
         // TODO: Figure out how to check for the class generated configurator
@@ -233,7 +235,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).run(configuration, environment);
+        new DropwizardPlatform(application).run(configuration, environment);
 
         verify(servletEnvironment).addFilter(eq(filterName), isA(filterClass));
 
@@ -265,7 +267,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).run(configuration, environment);
+        new DropwizardPlatform(application).run(configuration, environment);
 
         verify(servletEnvironment).addFilter(eq(filterName), eq(filter));
 
@@ -296,7 +298,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).run(configuration, environment);
+        new DropwizardPlatform(application).run(configuration, environment);
 
         verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesA), eq(true), eq("/a"));
         verify(filterDynamic).addMappingForUrlPatterns(eq(dispatcherTypesA), eq(true), eq("/b"));
@@ -325,7 +327,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).initialize(bootstrap);
+        new DropwizardPlatform(application).initialize(bootstrap);
 
         verify(bootstrap).addBundle(eq(bundle));
         verify(bootstrap).addBundle(isA(TestBundle.class));
@@ -346,7 +348,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).initialize(bootstrap);
+        new DropwizardPlatform(application).initialize(bootstrap);
 
         verify(bootstrap).addCommand(eq(command));
         verify(bootstrap).addCommand(isA(TestCommand.class));
@@ -367,7 +369,7 @@ public class PlatformTest {
                 }
         );
 
-        new Platform(application).initialize(bootstrap);
+        new DropwizardPlatform(application).initialize(bootstrap);
 
         // TODO: Add a verification for the class-generated Initializer
         verify(initializer).initialize(eq(bootstrap));

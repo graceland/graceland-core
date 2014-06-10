@@ -14,7 +14,8 @@ import io.graceland.platform.inject.Graceland;
 /**
  * This module is used to provide Dropwizard specific objects to the Guice dependency graph. It will only have access
  * to the {@link io.graceland.platform.PlatformConfiguration} and {@link io.dropwizard.setup.Environment} in the
- * {@link io.graceland.platform.Platform#run(io.graceland.platform.PlatformConfiguration, io.dropwizard.setup.Environment)} method.
+ * {@link io.graceland.platform.DropwizardPlatform#run(io.graceland.platform.PlatformConfiguration, io.dropwizard.setup.Environment)}
+ * method.
  * <p/>
  * This module also provides access to environment objects, such as the
  * {@link com.fasterxml.jackson.databind.ObjectMapper} and the {@link com.codahale.metrics.MetricRegistry}.
