@@ -61,7 +61,7 @@ Initializer
 ===========
 
 If you need access to the a ``io.dropwizard.setup.Bootstrap``, you can use an ``Initializer``.
-This phase is usually used to add commands and bundles to a dropwizard applicataion.
+This phase is usually used to add commands and bundles to a dropwizard application.
 
 .. code-block:: java
 
